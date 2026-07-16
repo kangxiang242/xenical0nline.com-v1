@@ -1,0 +1,114 @@
+@block-bg: #ffdec1;
+@main-color: #ff9b3f;
+.main-wrapper{
+    width: 100%;
+    position: relative;
+    margin-bottom: 4rem;
+    .fixed-bg{
+        background-size: cover;
+        position: fixed;
+        width: 100%;
+        height: calc(100vh - 6rem);
+        z-index: -1;
+    }
+    .page-title{
+        text-align: center;
+        font-size: 2.6rem;
+        font-weight: 500;
+        color: #fff;
+        margin-bottom: 4rem;
+    
+    }
+    .main{
+        position: relative;
+        width: 90%;
+        margin: 0 auto 5rem;
+        padding-top: 1.4rem;
+        background-color: #FFF;
+        padding: 3rem 2rem;
+        border-radius: 2rem;
+        transform: translateY(200px);
+        opacity: 0;
+        animation: showup 1s 0.6s ease-in-out forwards;
+        .desc{
+            font-size: 1.3rem;
+            border-bottom: 1.5px solid @block-bg;
+            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .form-group{
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: baseline;
+            label{
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+                display: block;
+                flex-shrink: 0;
+                padding-right: 0.4rem;
+            }
+            .form-control{
+                width: 100%;
+                height: 4rem;
+                border: 0.15rem solid @block-bg;
+                font-size: 1.3rem;
+                padding: 0 1.5rem;
+                border-radius: 0.6rem;
+                
+                &::placeholder{
+                    color: #acacac;
+                }
+            }
+            .inline{
+                display: flex;
+                justify-content: space-between;
+            }
+            .code{
+                height: 4rem;
+                width: 10rem;
+                flex-shrink: 0;
+                margin-left: 1rem;
+                img{
+                    height: 100%;
+                }
+            }
+            
+        }
+        .form-btn{
+            width: 100%;
+            height: 4rem;
+            background: @block-bg;
+            font-size: 1.4rem;
+            color: #fff;
+            outline: none;
+            border:none;
+            margin-top: 1rem;
+            border-radius: 0.8rem;
+            &.activate-btn{
+                background: @main-color;
+            }
+        }
+    }
+
+    .foot{
+        padding: 0 2rem;
+        font-size: 1.3rem;
+        .li{
+            margin-bottom: 2rem;
+        }
+    }
+}
+@keyframes showup {
+    0%{
+        opacity: 0;
+        transform: translateY(200px);
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

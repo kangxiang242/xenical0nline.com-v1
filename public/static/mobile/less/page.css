@@ -1,0 +1,27 @@
+.main-wrapper {
+  width: 100%;
+  padding: 0 2rem;
+  margin-bottom: 6rem;
+}
+.main-wrapper .title {
+  font-size: 2.6rem;
+  text-align: center;
+  font-weight: 500;
+  padding-bottom: 1rem;
+  border-bottom: 1.5px solid #ffdec1;
+  margin-bottom: 3rem;
+}
+.main-wrapper .page-body h2,
+.main-wrapper .page-body h3 {
+  font-weight: 500;
+  margin-top: 2rem;
+}
+.main-wrapper .page-body p,
+.main-wrapper .page-body span {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.breadcrumb {
+  padding: 1rem 0;
+}

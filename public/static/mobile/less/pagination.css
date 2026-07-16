@@ -1,0 +1,45 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+.pagination .page-item {
+  width: 3.5rem;
+  height: 3.5rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.6rem;
+  border: 0.1rem solid #ff9b3e;
+  color: #ff9b3e;
+  margin-right: 1rem;
+  font-size: 1.6rem;
+}
+.pagination .page-item a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  color: #ff9b3e;
+}
+.pagination .page-item:first-child,
+.pagination .page-item:last-child {
+  font-size: 3rem;
+}
+.pagination .page-item:first-child span,
+.pagination .page-item:last-child span {
+  transform: translateY(-0.3rem);
+}
+.pagination .page-item:first-child a,
+.pagination .page-item:last-child a {
+  transform: translateY(-0.3rem);
+}
+.pagination .active {
+  background-color: #ff9b3e;
+  color: #fff;
+}
+.pagination .disabled {
+  border: 0.1rem solid #ff9b3e;
+  color: #a3a3a3;
+}

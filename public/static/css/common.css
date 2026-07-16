@@ -1,0 +1,22 @@
+:root {
+    --main-color: #00594E;
+}
+html{
+    height: 100% !important;
+}
+
+body{
+    letter-spacing: 1px;
+    position: relative;
+}
+
+img{
+    display: block;
+    width: 100%;
+}
+
+
+* {
+    margin: 0px;
+    padding: 0px;
+}

@@ -1,0 +1,120 @@
+.main-wrapper {
+  width: 100%;
+  padding: 0 2rem;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 100px;
+}
+.main-wrapper .news-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.main-wrapper .time {
+  position: relative;
+  background-color: #ffebd9;
+  color: #9c6833;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.main-wrapper .time:before,
+.main-wrapper .time:after {
+  content: "";
+  position: relative;
+  display: block;
+  background-color: #ffdec1;
+  height: 2px;
+  width: 28%;
+}
+.main-wrapper .news-content {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 3rem 2rem;
+  border-radius: 2rem;
+}
+.main-wrapper .news-content img {
+  width: 100%;
+}
+.main-wrapper .relatednav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6rem;
+}
+.main-wrapper .relatednav-arrow:after,
+.main-wrapper .relatednav-arrow:before {
+  content: '';
+  display: block;
+  position: absolute;
+  background: #ff9b3f;
+  transition: background 0.15s;
+}
+.main-wrapper .relatednav-prev {
+  position: relative;
+  width: 48%;
+}
+.main-wrapper .relatednav-prev .relatednav-arrow {
+  position: relative;
+  display: block;
+  transition: border-color 0.15s;
+}
+.main-wrapper .relatednav-prev .relatednav-arrow:before {
+  left: 0;
+  transform: rotate(60deg);
+  transform-origin: 50% 100%;
+  width: 0.15rem;
+  height: 1.6rem;
+  bottom: 1rem;
+}
+.main-wrapper .relatednav-prev .relatednav-arrow:after {
+  width: 100%;
+  height: 0.15rem;
+  left: 0;
+  bottom: 1rem;
+}
+.main-wrapper .relatednav-prev .relatednav-title {
+  display: inline-block;
+  transition: text-shadow 0.1s;
+  font-size: 1.3rem;
+}
+.main-wrapper .relatednav-prev:hover .relatednav-title {
+  color: #ff9b3e;
+}
+.main-wrapper .relatednav-next {
+  position: relative;
+  width: 48%;
+  text-align: right;
+}
+.main-wrapper .relatednav-next .relatednav-arrow {
+  position: relative;
+  display: block;
+  transition: border-color 0.15s;
+}
+.main-wrapper .relatednav-next .relatednav-arrow:before {
+  width: 0.15rem;
+  height: 1.6rem;
+  bottom: 1rem;
+  right: 0;
+  transform: rotate(-60deg);
+  transform-origin: 50% 100%;
+}
+.main-wrapper .relatednav-next .relatednav-arrow:after {
+  width: 100%;
+  height: 0.15rem;
+  left: 0;
+  bottom: 1rem;
+}
+.main-wrapper .relatednav-next .relatednav-title {
+  display: inline-block;
+  transition: text-shadow 0.1s;
+  font-size: 1.4rem;
+}
+.main-wrapper .relatednav-next:hover .relatednav-title {
+  color: #ff9b3e;
+}
+.breadcrumb {
+  padding: 1rem 0;
+  margin-bottom: 3rem;
+}

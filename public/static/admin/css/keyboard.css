@@ -1,0 +1,89 @@
+.keyboard{
+	width:451px;
+	height: auto;
+	zoom:1;
+	overflow: hidden;
+	background: #fff;
+	position: absolute;
+	top: 46px;
+	left: 200px;
+	padding:0;
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	box-shadow: 8px 8px 8px #666;
+	display: none;
+	z-index: 99;
+}
+.everykey{
+	float: left;
+	width:50px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	cursor: pointer;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	box-sizing: border-box;
+	font-size: 16px;
+	color:#000;
+}
+.everykey:hover{
+	background: #ccc;
+	color:#fff;
+	font-size:18px;
+}
+.otherkey{
+	width:100px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	float: left;
+	cursor: pointer;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	color:#000;
+}
+.otherkey:hover{
+	background: #f00;
+	color:#fff;
+}
+/* 订单页面的键盘 */
+.key_market{
+	width:100%;
+	height: 100%;
+	background: rgba(0,0,0,0.4);
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+}
+.key_main{
+	width:600px;
+	height: 420px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -210px;
+	margin-left: -300px;
+	background: #fff;
+}
+.key_title{
+	width:100%;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	font-size: 18px;
+}
+.key_code{
+	width:282px;
+	text-align: center;
+	padding:10px 0;
+	height:60px;
+	margin:0 auto;
+	position: relative;
+}
+.key_code .keyboard{
+	display: block;
+	top:70px;
+	left:-85px;
+}

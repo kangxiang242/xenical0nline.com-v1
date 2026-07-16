@@ -1,0 +1,189 @@
+@block-bg: #ffdec1;
+@main-color: #ff9b3f;
+.fixed-bg{
+    background-size: cover;
+    position: fixed;
+    width: 100%;
+    height: calc(100vh - 6rem);
+    z-index: -1;
+}
+
+.page-title{
+    text-align: center;
+    font-size: 2.6rem;
+    font-weight: 500;
+    margin-bottom: 4rem;
+}
+.pagination{
+    margin-top: 80px;
+}
+.news-wrap{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 2rem 6rem;
+    .item{
+        transform: translateY(100px);
+        transition: all 0.7s;
+        opacity: 0;
+        .info{
+            display: block;
+            background-color: #FFF;
+            border-radius: 3rem;
+            overflow: hidden;
+            margin-bottom: 30px;
+            .Img{
+                position: relative;
+                overflow: hidden;
+                width: 100%;
+                padding: 2rem 2rem 0;
+                opacity: 0;
+                img{
+                    -webkit-transition: all .5s ease-out;
+                    -o-transition: all .5s ease-out;
+                    transition: all .5s ease-out;
+                    border-radius: 1.2rem 1.2rem 0 0;
+                }
+            }
+            .Txt{
+                padding: 2rem;
+                width: 100%;
+                word-wrap: break-word;
+                word-break: break-word;
+                white-space: normal;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                .newsInfoIdxBox {
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    margin-bottom: 1rem;
+                    padding-bottom: 1rem;
+                    border-bottom: 1.5px solid @block-bg;
+                    -webkit-transform: translateY(20px);
+                    -ms-transform: translateY(20px);
+                    transform: translateY(20px);
+                    opacity:0;
+                    -webkit-transition: all .5s ease-out;
+                    -o-transition: all .5s ease-out;
+                    transition: all .5s ease-out;
+                    .newsDateBox {
+                        display: flex;
+                        align-items: center;
+                        flex-direction: column;
+                        color: #000;
+                        line-height: 1;
+                        letter-spacing: 0;
+                        font-weight: 700;
+                        padding: 0 15px;
+                        margin-right: 15px;
+                        border-right: 1.5px solid @block-bg;
+                        flex-shrink: 0;
+                        .day {
+                            font-size: 24px;
+                        }
+                        .ym {
+                            font-size: 12px;
+                        }
+                    }
+    
+                    .news-title{
+                        font-size: 1.5rem;
+                        font-weight: 700;
+                        color: #191919;
+                    }
+                }
+    
+                .sub{
+                    margin-bottom: auto;
+                    -webkit-transition: all .5s ease-out;
+                    -o-transition: all .5s ease-out;
+                    transition: all .5s ease-out;
+                    overflow-wrap: break-word;
+                    color: #6f6f6f;
+                    font-size: 1.2rem;
+                    -webkit-transform: translateY(20px);
+                    -ms-transform: translateY(20px);
+                    transform: translateY(20px);
+                    opacity: 0;
+                    padding: 0 1rem;
+                    text-align: justify;
+                }
+                .go{
+                    font-size: 1.3rem;
+                    font-weight: 500;
+                    display: flex;
+                    align-items: center;
+                    justify-content: end;
+                    transition: all 0.3s;
+                    color: @main-color;
+                    i{
+                        font-size: 1.3rem;
+                        font-weight: 700;
+                        margin-left: 4px;
+                        animation: goList 1s infinite; 
+                    }
+                }
+            }
+        }
+        &.show {
+            transform: translateY(0);
+            opacity: 1;
+            .info{
+                .Img{
+                    -webkit-transform: translate(0);
+                    -ms-transform: translate(0);
+                    transform: translate(0);
+                    opacity: 1;
+                }
+                .Txt{
+                    .newsInfoIdxBox {
+                        -webkit-transform: translate(0);
+                        -ms-transform: translate(0);
+                        transform: translate(0);
+                        opacity: 1;
+                        -webkit-transition-delay: .5s;
+                        -o-transition-delay: .5s;
+                        transition-delay: .5s;
+                    }
+                    .sub{
+                        
+                        -webkit-transform: translateY(0);
+                        -ms-transform: translateY(0);
+                        transform: translateY(0);
+                        opacity: 1;
+                        -webkit-transition-delay: .7s;
+                        -o-transition-delay: .7s;
+                        transition-delay: .7s;
+                    }
+                    
+                }
+                p{
+                    -webkit-transition-delay: .7s;
+                    -o-transition-delay: .7s;
+                    transition-delay: .7s;
+                }
+                
+            }
+        }
+        
+        &:first-child {
+            transition-delay: 1s;
+        }
+    }
+}
+.breadcrumb{
+    position: absolute;
+    li{
+        color: #FFF;
+    }
+    a{
+        color: #FFF;
+    }
+}
+
+

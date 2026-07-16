@@ -1,0 +1,46 @@
+.pagination{
+    display: flex;
+    justify-content: center;
+    .page-item{
+        width: 3.5rem;
+        height: 3.5rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.6rem;
+        border: 0.1rem solid #ff9b3e;
+        color: #ff9b3e;
+        margin-right: 1rem;
+        font-size: 1.6rem;
+        a{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            color: #ff9b3e;
+
+        }
+    }
+    .page-item:first-child,.page-item:last-child{
+        font-size: 3rem;
+        span{
+            transform: translateY(-0.3rem);
+        }
+        a{
+            transform: translateY(-0.3rem);
+        }
+    }
+
+    .active{
+        background-color: #ff9b3e;
+        color: #fff;
+    }
+
+    .disabled{
+        border: 0.1rem solid #ff9b3e;
+        color: #a3a3a3;
+    }
+
+}

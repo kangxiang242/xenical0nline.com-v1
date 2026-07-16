@@ -1,0 +1,29 @@
+.section {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 80px;
+  position: relative;
+}
+.section .section-wrapper {
+  width: min(1040px, 100%);
+  padding: 0 16px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+.section .section-1100 {
+  width: min(1100px, 100%);
+}
+.section .wrapper-1140 {
+  width: min(1140px, 100%);
+}
+.section .wrapper-1168 {
+  width: min(1168px, 100%);
+}
+@media screen and (max-width: 768px) {
+  .section {
+    margin-bottom: 48px;
+  }
+  .section .section-wrapper {
+    padding: 0 12px;
+  }
+}

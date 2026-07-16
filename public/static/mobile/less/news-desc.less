@@ -1,0 +1,133 @@
+@block-bg: #ffdec1;
+@main-color: #ff9b3f;
+.main-wrapper{
+    width: 100%;
+    padding: 0 2rem;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 100px;
+    .news-title{
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    .time{
+        position: relative;
+        background-color: #ffebd9;
+        color: #9c6833;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        &:before, &:after{
+            content: "";
+            position: relative;
+            display: block;
+            background-color: @block-bg;
+            height: 2px;
+            width: 28%;
+        }
+    }
+    .news-content{
+        background-color: rgba(255, 255, 255, 0.6);
+        padding: 3rem 2rem;
+        border-radius: 2rem;
+        img{
+            width: 100%;
+        }
+    }
+
+    .relatednav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 6rem;
+    }
+
+    .relatednav-arrow:after, .relatednav-arrow:before {
+        content: '';
+        display: block;
+        position: absolute;
+        background: @main-color;
+        transition: background .15s;
+    }
+
+
+    .relatednav-prev{
+        position: relative;
+        width: 48%;
+
+        .relatednav-arrow {
+            position: relative;
+            display: block;
+            transition: border-color .15s;
+            &:before {
+                left: 0;
+                transform: rotate(60deg);
+                transform-origin: 50% 100%;
+                width: 0.15rem;
+                height: 1.6rem;
+                bottom: 1rem;
+            }
+            &:after {
+                width: 100%;
+                height: 0.15rem;
+                left: 0;
+                bottom: 1rem;
+            }
+        }
+        .relatednav-title {
+            display: inline-block;
+            transition: text-shadow .1s;
+            font-size: 1.3rem;
+        }
+        &:hover{
+            .relatednav-title{
+                color: #ff9b3e;
+            }
+        }
+    }
+    .relatednav-next {
+        position: relative;
+        width: 48%;
+        text-align: right;
+        .relatednav-arrow {
+            position: relative;
+            display: block;
+
+            transition: border-color .15s;
+            &:before {
+                width: 0.15rem;
+                height: 1.6rem;
+                bottom: 1rem;
+
+                right: 0;
+                transform: rotate(-60deg);
+                transform-origin: 50% 100%;
+
+            }
+            &:after {
+                width: 100%;
+                height: 0.15rem;
+                left: 0;
+                bottom: 1rem;
+            }
+        }
+        .relatednav-title {
+            display: inline-block;
+            transition: text-shadow .1s;
+            font-size: 1.4rem;
+        }
+        &:hover{
+            .relatednav-title{
+                color: #ff9b3e;
+            }
+        }
+    }
+}
+
+.breadcrumb{
+    padding: 1rem 0;
+    margin-bottom: 3rem;
+}

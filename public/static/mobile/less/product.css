@@ -1,0 +1,124 @@
+.product-container {
+  padding: 0 1.5rem;
+  margin-top: 2rem;
+}
+.product-container .goods {
+  position: relative;
+  margin-bottom: 4rem;
+  display: grid;
+  grid-template-columns: 46% 1fr;
+  gap: 1.2rem;
+  overflow: hidden;
+}
+.product-container .goods .img-wrap {
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.product-container .goods .info {
+  display: flex;
+  flex-direction: column;
+}
+.product-container .goods .info .title {
+  font-size: 1.4rem;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+}
+.product-container .goods .info .tags {
+  margin-top: 1rem;
+}
+.product-container .goods .info .tags span {
+  padding: 0.2rem 0.6rem;
+  font-size: 1.1rem;
+  display: inline-block;
+  font-weight: 700;
+  border-radius: 0.4rem;
+  /* border: 0.1rem solid #ff9b3e; */
+  margin-bottom: 0.6rem;
+  background-color: #ffd8b1;
+  color: #d97a22;
+}
+.product-container .goods .info .attr {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+.product-container .goods .info .price-sec {
+  display: flex;
+  flex-direction: row-reverse;
+  width: fit-content;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.6rem;
+  margin-top: auto;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+.product-container .goods .info .price-sec .price {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ff9b3f;
+}
+.product-container .goods .info .price-sec .discount {
+  font-size: 1.2rem;
+  position: absolute;
+  left: 0;
+  top: 1.2rem;
+  transform: rotate(-40deg);
+  color: #FFF;
+  font-weight: 700;
+}
+.product-container .goods .info .price-sec .discount::after {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: #ff9b3e;
+  width: 200%;
+  height: 2.4rem;
+  right: -50%;
+  top: -0.4rem;
+  z-index: -1;
+}
+.product-container .goods .info .price-sec .market-price {
+  font-size: 1.4rem;
+  color: #9c6833;
+  font-weight: 700;
+  position: relative;
+}
+.product-container .goods .info .price-sec .market-price:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background-color: #f00;
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  top: 50%;
+  left: 50%;
+}
+.product-container .goods .info .price-sec .twd {
+  font-size: 0.7em;
+  margin-right: 0.3em;
+}
+.product-container .goods .info .btns {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.product-container .goods .info .shop-btn {
+  flex: 2;
+  width: 100%;
+  background: #ff9b3f;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.6rem 1.4rem;
+}
+.product-container .goods .info .shop-btn i {
+  font-size: 1.2rem;
+}
+.product-container .goods .info .go-info {
+  flex: 1;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+}

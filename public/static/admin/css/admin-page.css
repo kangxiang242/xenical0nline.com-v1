@@ -1,0 +1,70 @@
+
+.pagination-box{
+    margin-top: 100px;
+    margin-bottom: 160px;
+    display: block;
+}
+
+.pagination{
+
+
+}
+#pagination-digg{
+   /* width: 300px;*/
+    margin: 0 auto;
+}
+#pagination-digg li{
+    border:0; margin:0; padding:0;
+    font-size:11px;
+    list-style:none;
+    margin-right:2px;
+}
+#pagination-digg a{
+    border:solid 1px #0ae;
+    margin-right:2px;
+}
+#pagination-digg .previous-off,
+#pagination-digg .next-off {
+    border:solid 1px #DEDEDE;
+    color:#888888;
+    display:block;
+    float:left;
+    font-weight:bold;
+    margin-right:2px;
+    padding: 8px 16px;
+
+    border-radius: 3px;
+}
+#pagination-digg .next a,
+#pagination-digg .previous a {
+    font-weight:bold;
+}
+#pagination-digg .active{
+    background:#0ae;
+    color:#fff;
+    font-weight:bold;
+    display:block;
+    float:left;
+    padding: 8px 16px;
+    margin-left: 5px;
+}
+#pagination-digg a:link,
+#pagination-digg a:visited {
+    color:#333333;
+    display:block;
+    float:left;
+    padding: 8px 16px;
+    text-decoration:none;
+    border: 0.5px solid #BFBFBF;
+    margin-left: 5px;
+
+}
+#pagination-digg a:hover{
+    border:solid 1px #0e509e
+}
+@media screen and (max-width: 960px){
+    /* 手机端CSS代码 */
+    .pagination-box{
+        display: none;
+    }
+}
