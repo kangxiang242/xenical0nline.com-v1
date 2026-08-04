@@ -4,9 +4,6 @@ header {
 footer {
   display: none;
 }
-.main-wrapper {
-  margin-top: 0;
-}
 .checkout-header {
   width: 100%;
   height: 80px;
@@ -22,53 +19,10 @@ footer {
   height: 100%;
 }
 .checkout-header .logo {
-  display: flex;
-  align-items: end;
-  gap: 10px;
-}
-.checkout-header .logo .compose {
-  width: 80px;
-  height: 46px;
-  position: relative;
-}
-.checkout-header .logo .compose .fra {
   position: absolute;
-  left: 50%;
-}
-.checkout-header .logo .compose .fra.fra-1 {
-  width: 42px;
+  left: 20px;
   top: 50%;
-  transform: translate(-50%, -50%);
-}
-.checkout-header .logo .compose .fra.fra-2 {
-  width: 64px;
-  transform: translateX(-50%);
-  bottom: 0;
-  transition: all 0.3s;
-}
-.checkout-header .logo .compose .fra.fra-3 {
-  width: 80px;
-  transform: translateX(-50%);
-  bottom: 0;
-  transition: all 0.3s;
-}
-.checkout-header .logo .intact .xenical-logo {
-  width: 120px;
-}
-.checkout-header .logo .intact .text {
-  font-size: 12px;
-  margin-top: 3px;
-}
-.checkout-header .logo .intact .text.white {
-  color: #fff;
-}
-.checkout-header .logo:hover .compose .fra.fra-2 {
-  opacity: 0.2;
-  transition: all 0.6s;
-}
-.checkout-header .logo:hover .compose .fra.fra-3 {
-  opacity: 0.2;
-  transition: all 0.3s;
+  transform: translateY(-50%);
 }
 .checkout-header .page-title {
   text-align: center;
@@ -125,7 +79,6 @@ body {
 .main .base-column .form-group {
   position: relative;
   margin-bottom: 40px;
-  width: 100%;
 }
 .main .base-column .form-group .shut {
   position: absolute;
@@ -147,6 +100,8 @@ body {
   height: 30px;
   border: none;
   border-bottom: 1px solid #D8D8D8;
+  font-size: 16px;
+  touch-action: manipulation;
 }
 .main .base-column .form-group .form-control.focus,
 .main .base-column .form-group .form-control:focus {
@@ -180,14 +135,14 @@ body {
   gap: 20px;
 }
 .main .base-column .form-group .radio-box .form-radio {
-  width: 200px;
+  width: 100%;
 }
 .main .base-column .form-group .radio-box .form-radio .radio-label {
   display: flex;
   align-items: center;
   border-radius: 10px;
   border: 1.5px solid #C4C4C4;
-  padding: 0.6rem 0 0.6rem 1.2rem;
+  padding: 0.6rem 1.2rem;
   transition: all 0.15s;
 }
 .main .base-column .form-group .radio-box .form-radio .radio-label .ana {
@@ -225,6 +180,7 @@ body {
 .main .base-column .form-group .radio-box .form-radio .radio-label .text {
   margin-left: 10px;
   font-size: 13px;
+  letter-spacing: 0;
 }
 .main .base-column .form-group .radio-box .form-radio .radio-label .text i {
   font-style: normal;
@@ -256,9 +212,10 @@ body {
   background: #FFFFFF;
   border-radius: 6px;
   border: 1px solid #C4C4C4;
-  font-size: 14px;
+  font-size: 16px;
   padding-left: 10px;
   outline: none;
+  touch-action: manipulation;
 }
 .main .base-column .form-group .form-address {
   position: relative;
@@ -342,6 +299,8 @@ body {
   border: 1px solid #C4C4C4;
   padding: 6px 10px;
   font-family: "YaHei Consolas Hybrid";
+  font-size: 16px;
+  touch-action: manipulation;
 }
 .main .base-column .form-group .form-textarea:focus {
   border-color: #ff9b3e;
@@ -522,6 +481,11 @@ body {
   font-size: 26px;
   color: #ff9b3e;
 }
+.main .count-column .others-sec .sales-sec .sales-item .sales-ico svg {
+  width: 26px;
+  height: 26px;
+  color: #ff9b3e;
+}
 .main .count-column .others-sec .sales-sec .sales-item .sales-title {
   font-size: 13px;
   margin: 4px 0 2px;
@@ -529,83 +493,4 @@ body {
 .main .count-column .others-sec .sales-sec .sales-item .sales-sub {
   font-size: 10px;
   color: #999;
-}
-@media screen and (max-width: 1024px) {
-  .checkout-header {
-    height: 60px;
-  }
-  .checkout-header .logo,
-  .checkout-header .logo-wrap {
-    display: none;
-  }
-  .checkout-header .page-title {
-    font-size: 18px;
-    white-space: nowrap;
-  }
-  .checkout-wrapper {
-    width: 100%;
-    padding: 0 12px;
-  }
-  .step {
-    justify-content: flex-start;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding-bottom: 4px;
-  }
-  .step::-webkit-scrollbar {
-    display: none;
-  }
-  .step li {
-    flex-shrink: 0;
-  }
-  .main {
-    flex-direction: column;
-    gap: 16px;
-  }
-  .main .base-column,
-  .main .count-column {
-    width: 100%;
-  }
-  .main .base-column {
-    padding: 24px 16px;
-  }
-  .main .base-column .title {
-    font-size: 21px;
-    margin-bottom: 24px;
-  }
-  .main .base-column .form-group {
-    margin-bottom: 24px;
-  }
-  .main .base-column .form-group .form-select {
-    gap: 8px;
-  }
-  .main .base-column .form-group .form-select .select-box {
-    flex: 1;
-  }
-  .main .base-column .form-group .form-select .select-box select {
-    width: 100%;
-  }
-  .main .base-column .form-group .radio-box {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .main .base-column .form-group .radio-box .form-radio {
-    width: 100%;
-  }
-  .main .count-column .card {
-    padding: 20px 14px;
-  }
-  .main .count-column .submit-btn {
-    height: 44px;
-    font-size: 15px;
-  }
-  .main .count-column .others-sec {
-    margin-top: 16px;
-  }
-  .main .count-column .others-sec .others {
-    padding-top: 18px;
-  }
-  .main .count-column .others-sec .sales-sec {
-    gap: 12px;
-  }
 }

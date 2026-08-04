@@ -18,7 +18,7 @@ class ArticleCateResource extends Resource
 
     protected static ?string $navigationGroup = '內容管理';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $navigationLabel = '文章分類';
 

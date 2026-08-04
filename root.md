@@ -105,8 +105,8 @@ xenical0nline.com-v1/
 | OrderResource | 訂單管理 | OrderController | — | 1 |
 | ProductResource | 商品管理 | ProductController | — | 2 |
 | ArticleResource | 文章管理 | ArticleController | 內容管理 | 1 |
-| ArticleCateResource | 文章分類 | ArticleCateController | 內容管理 | 2 |
-| MessageResource | 訊息管理 | MessageController | 內容管理 | 3 |
+| ArticleCateResource | 文章分類 | ArticleCateController | 內容管理 | 4 |
+| MessageResource | 訊息管理 | MessageController | — | 3 |
 | BannerResource | 橫幅管理 | BannerController | 內容管理 | 5 |
 | SeoResource | SEO管理 | SeoController | 內容管理 | 7 |
 | FaqResource | FAQ管理 | FaqController | 內容管理 | 8 |
@@ -125,6 +125,17 @@ xenical0nline.com-v1/
 | EncryptCookies | Cookie 加密 |
 | VerifyCsrfToken | CSRF 保护 |
 | TrustProxies | 代理信任 |
+
+### 新增功能
+
+| 功能 | 说明 |
+|------|------|
+| 訂單匯出 | 全部匯出 / 匯出選中 (XLSX, 12欄) |
+| Dashboard Widget | 新訂單/新留言/新設備統計 + 頁面訪問排行 |
+| wangEditor5 | 富文本編輯器 (取代 Filament RichEditor) |
+| Release Token | 版本追蹤系統 (`php artisan release:stamp`) |
+| 客製 Login 頁 | 禁用瀏覽器自動填充帳號密碼 |
+| Filament Hooks | 自訂 CSS (左標題右編輯框、FilePond 透明背景) |
 
 ## 数据库
 
@@ -148,6 +159,11 @@ npm run dev
 
 # 清除缓存
 php artisan optimize:clear
+
+# 建立 Release Token
+php artisan release:stamp --bump=patch   # 1.0.0 → 1.0.1
+php artisan release:stamp --bump=minor   # 1.0.1 → 1.1.0
+php artisan release:stamp --bump=major   # 1.0.1 → 2.0.0
 
 # 后台访问
 open http://localhost:8012/ami3-17drt4-6ne634russ

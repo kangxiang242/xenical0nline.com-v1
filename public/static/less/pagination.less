@@ -1,6 +1,9 @@
 .pagination{
     display: flex;
     justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
     .page-item{
         width: 35px;
         height: 35px;
@@ -12,21 +15,29 @@
         border: 1px solid #ff9b3e;
         color: #ff9b3e;
         margin-right: 10px;
-        a{
+        a,
+        .page-link{
             display: flex;
             align-items: center;
             justify-content: center;
             width: 35px;
             height: 35px;
             color: #ff9b3e;
+            text-decoration: none;
+            padding: 0;
+            background: transparent;
+            border: none;
+            font-size: inherit;
         }
     }
     .page-item:first-child,.page-item:last-child{
         font-size: 26px;
-        span{
-            transform: translateY(-3px);
-        }
-        a{
+        width: auto;
+        padding: 0 8px;
+        border: none;
+        a,
+        .page-link{
+            width: auto;
             transform: translateY(-3px);
         }
     }
@@ -34,11 +45,19 @@
     .active{
         background-color: #ff9b3e;
         color: #fff;
+        .page-link{
+            color: #fff;
+        }
     }
 
     .disabled{
         border: 1px solid #a3a3a3;
         color: #a3a3a3;
+        opacity: .5;
+        cursor: default;
+        .page-link{
+            color: #a3a3a3;
+        }
     }
 
 }

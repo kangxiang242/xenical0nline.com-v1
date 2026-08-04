@@ -103,6 +103,20 @@ class ProductController extends Controller
             Carbon::today()->setTime(16, 59, 59)
         );
 
+        // official 版商品詳情視圖使用 $goods->details 輸出藥品訊息區塊；
+        // 本站資料存在 config product_details，轉成 HTML 供新視圖渲染。
+        $detailsHtml = '';
+        if (!empty($product_details)) {
+            $parts = [];
+            foreach ($product_details as $item) {
+                // 與原站視圖一致：desc 允許後台 HTML（原視圖以 {!! !!} 輸出）
+                $parts[] = '<h3>'.($item['title'] ?? '').'</h3>'
+                    .'<p>'.str_replace(PHP_EOL, '<br>', $item['desc'] ?? '').'</p>';
+            }
+            $detailsHtml = implode('', $parts);
+        }
+        $goods->setAttribute('details', $detailsHtml);
+
         return template('product.show',compact('goods','skus','comment','comment_labels','product_details_gb','product_details','slides','showCountdown'));
     }
 

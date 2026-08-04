@@ -5,7 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
-    protected $dates = ['delete_at','release_at'];
+    protected function casts(): array
+    {
+        return [
+            'release_at' => 'datetime',
+        ];
+    }
 
     protected $fillable = [
         'title', 'brief', 'img', 'img_alt', 'content', 'sort', 'status',

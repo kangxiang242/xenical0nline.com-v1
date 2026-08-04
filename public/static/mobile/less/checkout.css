@@ -1,9 +1,6 @@
 header {
   display: none;
 }
-footer {
-  margin-bottom: 8rem;
-}
 .online-buy {
   display: none;
 }
@@ -154,6 +151,8 @@ footer {
   height: 3rem;
   border: none;
   border-bottom: 0.1rem solid #D8D8D8;
+  font-size: 1.6rem;
+  touch-action: manipulation;
 }
 .main .mater .form-group .form-control.focus,
 .main .mater .form-group .form-control:focus {
@@ -185,6 +184,7 @@ footer {
 }
 .main .mater .form-group .radio-box {
   display: flex;
+  flex-direction: column;
   gap: 1rem;
 }
 .main .mater .form-group .radio-box .form-radio {
@@ -193,9 +193,10 @@ footer {
 .main .mater .form-group .radio-box .form-radio .radio-label {
   display: flex;
   align-items: center;
+  gap: 1rem;
   border-radius: 0.8rem;
   border: 0.15rem solid #C4C4C4;
-  padding: 0.6rem 0 0.6rem 1.2rem;
+  padding: 0.6rem 1.2rem;
   transition: all 0.15s;
 }
 .main .mater .form-group .radio-box .form-radio .radio-label .ana {
@@ -227,14 +228,19 @@ footer {
   height: 2.4rem;
 }
 .main .mater .form-group .radio-box .form-radio .radio-label .kulo {
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  transform: scale(1.2);
 }
 .main .mater .form-group .radio-box .form-radio .radio-label .text {
-  margin-left: 1rem;
+  width: 100%;
   font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: space-between;
 }
-.main .mater .form-group .radio-box .form-radio .radio-label .text i {
+.main .mater .form-group .radio-box .form-radio .radio-label .text u i {
   font-style: normal;
 }
 .main .mater .form-group .radio-box .form-radio input[type=radio] {
@@ -264,9 +270,10 @@ footer {
   background: #FFFFFF;
   border-radius: 0.6rem;
   border: 0.1rem solid #C4C4C4;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   padding-left: 1rem;
   outline: none;
+  touch-action: manipulation;
 }
 .main .mater .form-group .form-address {
   position: relative;
@@ -364,6 +371,8 @@ footer {
   border: 0.1rem solid #C4C4C4;
   padding: 0.6rem 1rem;
   font-family: "YaHei Consolas Hybrid";
+  font-size: 1.6rem;
+  touch-action: manipulation;
 }
 .main .mater .form-group .form-textarea:focus {
   border-color: #ff9b3e;
@@ -504,6 +513,11 @@ footer {
 }
 .main .others-sec .sales-sec .sales-item .sales-ico i {
   font-size: 26px;
+  color: #ff9b3e;
+}
+.main .others-sec .sales-sec .sales-item .sales-ico svg {
+  width: 26px;
+  height: 26px;
   color: #ff9b3e;
 }
 .main .others-sec .sales-sec .sales-item .sales-title {

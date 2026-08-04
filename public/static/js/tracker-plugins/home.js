@@ -1,37 +1,42 @@
-(function () {
+(function (window, document) {
     'use strict';
     if (!window.XenicalTracker) return;
-    var T = XenicalTracker;
 
-    var carousel = document.getElementById('hero-video-carousel');
-    if (carousel) {
-        var slides = carousel.querySelectorAll('.hero-slide');
-        var lastIdx = -1;
-        function trackSlide() {
-            var active = carousel.querySelector('.hero-slide.is-active, .hero-slide.active');
-            if (!active) return;
-            var idx = Array.prototype.indexOf.call(slides, active);
-            if (idx === lastIdx) return;
-            lastIdx = idx;
-            T.track('hero_slide_view', 'home.hero.slide', {
-                section: 'home.hero',
-                metadata: { slide_index: idx }
-            });
-        }
-        trackSlide();
-        var mo = new MutationObserver(trackSlide);
-        mo.observe(carousel, { attributes: true, subtree: true, attributeFilter: ['class'] });
-        setInterval(trackSlide, 3000);
+    function trackHeroSlide(index) {
+        XenicalTracker.track('hero_slide_view', 'home.hero.slide', {
+            section: 'hero',
+            label: 'Banner輪播',
+            metadata: { slide_index: index }
+        });
     }
 
-    document.querySelectorAll('.faq-question').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            var id = btn.id || btn.getAttribute('aria-controls') || '';
-            var willExpand = btn.getAttribute('aria-expanded') !== 'true';
-            T.track('faq_toggle', 'home.faq.toggle', {
-                section: 'home.faq',
-                metadata: { faq_id: id, expanded: willExpand ? 1 : 0 }
+    document.addEventListener('DOMContentLoaded', function () {
+        if (window.Swiper) {
+            document.querySelectorAll('.banner-section .swiper-container, .swiper-container').forEach(function (el, i) {
+                if (i > 0) return;
+                try {
+                    var inst = el.swiper;
+                    if (inst) {
+                        trackHeroSlide(inst.activeIndex || 0);
+                        inst.on('slideChange', function () { trackHeroSlide(inst.activeIndex || 0); });
+                    }
+                } catch (e) {}
             });
-        });
+        }
+        trackHeroSlide(0);
     });
-})();
+
+    document.addEventListener('click', function (e) {
+        var q = e.target.closest('.question-show, .faq-section .shrink, [data-faq-toggle]');
+        if (!q) return;
+        var item = q.closest('.item, .question-show');
+        var id = (item && item.getAttribute('data-faq-id')) || '';
+        var expanded = !(item && item.getAttribute('data-show'));
+        if (q.classList.contains('shrink')) expanded = !item.querySelector('.q-desc') || item.querySelector('.q-desc').style.display === 'none';
+        XenicalTracker.track('faq_toggle', 'home.faq.toggle', {
+            section: 'fqa',
+            label: 'FAQ展開',
+            metadata: { faq_id: id, expanded: expanded ? 1 : 0 }
+        });
+    }, true);
+})(window, document);

@@ -1,6 +1,7 @@
 .pagination{
     display: flex;
     justify-content: center;
+    margin: 20px 0;
     .page-item{
         width: 3.5rem;
         height: 3.5rem;
@@ -13,14 +14,18 @@
         color: #ff9b3e;
         margin-right: 1rem;
         font-size: 1.6rem;
-        a{
+        a,
+        .page-link{
             display: flex;
             align-items: center;
             justify-content: center;
             width: 3.5rem;
             height: 3.5rem;
             color: #ff9b3e;
-
+            text-decoration: none;
+            padding: 0;
+            background: transparent;
+            border: none;
         }
     }
     .page-item:first-child,.page-item:last-child{
@@ -28,7 +33,8 @@
         span{
             transform: translateY(-0.3rem);
         }
-        a{
+        a,
+        .page-link{
             transform: translateY(-0.3rem);
         }
     }
@@ -36,11 +42,18 @@
     .active{
         background-color: #ff9b3e;
         color: #fff;
+        .page-link{
+            color: #fff;
+        }
     }
 
     .disabled{
-        border: 0.1rem solid #ff9b3e;
+        border: 0.1rem solid #a3a3a3;
         color: #a3a3a3;
+        opacity: .5;
+        .page-link{
+            color: #a3a3a3;
+        }
     }
 
 }

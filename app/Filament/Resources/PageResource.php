@@ -42,14 +42,8 @@ class PageResource extends Resource
                             ->label('類型')
                             ->maxLength(255)
                             ->default('page'),
-                        Forms\Components\RichEditor::make('content')
+                        \App\Filament\Components\WangEditor::make('content')
                             ->label('內容')
-                            ->toolbarButtons([
-                                'bold', 'italic', 'underline', 'strike',
-                                'link', 'orderedList', 'bulletList',
-                                'h2', 'h3', 'blockquote',
-                                'redo', 'undo',
-                            ])
                             ->columnSpanFull(),
                     ])
                     ->columns(2),

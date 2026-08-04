@@ -52,14 +52,32 @@ class DeviceTypeHandlers
 
     }
 
+    public static function getBrowser($agent = null): string
+    {
+        if (!$agent) {
+            $agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+        }
+        $agent = strtolower($agent);
 
-    /**
-     *    判断是否为搜索引擎蜘蛛
-     *
-     * @param null $agent
-     * @return  string
-     * @author
-     */
+        $browsers = [
+            'edg' => 'Edge',
+            'edge' => 'Edge',
+            'opr' => 'Opera',
+            'opera' => 'Opera',
+            'chrome' => 'Chrome',
+            'safari' => 'Safari',
+            'firefox' => 'Firefox',
+        ];
+
+        foreach ($browsers as $key => $name) {
+            if (strpos($agent, $key) !== false) {
+                return $name;
+            }
+        }
+
+        return 'unknown';
+    }
+
     public static function getCrawler($agent = null) {
         if($agent){
             $agent = strtolower($agent);

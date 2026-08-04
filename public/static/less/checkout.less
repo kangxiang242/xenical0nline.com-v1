@@ -4,9 +4,6 @@ header{
 footer{
     display: none;
 }
-.main-wrapper{
-    margin-top: 0;
-}
 .checkout-header{
     width: 100%;
     height: 80px;
@@ -23,64 +20,10 @@ footer{
         height: 100%;
     }
     .logo{
-        display: flex;
-        align-items: end;
-        gap: 10px;
-        .compose{
-            width: 80px;
-            height: 46px;
-            position: relative;
-            .fra{
-                position: absolute;
-                left: 50%;
-                &.fra-1{
-                    width: 42px;
-                    top: 50%;
-                    transform: translate(-50%,-50%);
-                }
-    
-                &.fra-2{
-                    width: 64px;
-                    transform: translateX(-50%);
-                    bottom: 0;
-                    transition: all 0.3s;
-                }
-    
-                &.fra-3{
-                    width: 80px;
-                    transform: translateX(-50%);
-                    bottom: 0;
-                    transition: all 0.3s;
-                }
-            }
-        }
-        .intact{
-            .xenical-logo{
-                width: 120px;
-            }
-            .text{
-                font-size: 12px;
-                margin-top: 3px;
-                &.white{
-                    color: #fff;
-                }
-            }
-        }
-        
-        &:hover{
-            .compose{
-                .fra{
-                    &.fra-2{
-                        opacity: .2;
-                        transition: all 0.6s;
-                    }
-                    &.fra-3{
-                        opacity: .2;
-                        transition: all 0.3s;
-                    }
-                }
-            }
-        }
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
     }
     .page-title{
         text-align: center;
@@ -145,7 +88,6 @@ body{
         .form-group{
             position: relative;
             margin-bottom: 40px;
-            width: 100%;
             .shut{
                 position: absolute;
                 left: 0;
@@ -166,6 +108,8 @@ body{
                 height: 30px;
                 border: none;
                 border-bottom: 1px solid #D8D8D8;
+                font-size: 16px;
+                touch-action: manipulation;
                 &.focus,&:focus{
                     border-color: #ff9b3e;
                     +.shut{
@@ -198,14 +142,14 @@ body{
                 display: flex;
                 gap: 20px;
                 .form-radio{
-                    width: 200px;
+                    width: 100%;
                     
                     .radio-label{
                         display: flex;
                         align-items: center;
                         border-radius: 10px;
                         border: 1.5px solid #C4C4C4;
-                        padding: 0.6rem 0 0.6rem 1.2rem;
+                        padding: 0.6rem 1.2rem;
                         transition: all 0.15s;
                         .ana{
                             width: 2rem;
@@ -243,6 +187,7 @@ body{
                         .text{
                             margin-left: 10px;
                             font-size: 13px;
+                            letter-spacing: 0;
                             i{
                                 font-style: normal;
                             }
@@ -280,9 +225,10 @@ body{
                         background: #FFFFFF;
                         border-radius: 6px;
                         border: 1px solid #C4C4C4;
-                        font-size: 14px;
+                        font-size: 16px;
                         padding-left: 10px;
                         outline: none;
+                        touch-action: manipulation;
                     }
                 }
             }
@@ -373,6 +319,8 @@ body{
                 border: 1px solid #C4C4C4;
                 padding: 6px 10px;
                 font-family: "YaHei Consolas Hybrid";
+                font-size: 16px;
+                touch-action: manipulation;
                 &:focus{
                     border-color: #ff9b3e;
                 }
@@ -577,87 +525,5 @@ body{
             }
         }
 
-    }
-}
-
-@media screen and (max-width: 1024px){
-    .checkout-header{
-        height: 60px;
-        .logo,
-        .logo-wrap{
-            display: none;
-        }
-        .page-title{
-            font-size: 18px;
-            white-space: nowrap;
-        }
-    }
-    .checkout-wrapper{
-        width: 100%;
-        padding: 0 12px;
-    }
-    .step{
-        justify-content: flex-start;
-        overflow-x: auto;
-        white-space: nowrap;
-        padding-bottom: 4px;
-        &::-webkit-scrollbar{
-            display: none;
-        }
-        li{
-            flex-shrink: 0;
-        }
-    }
-    .main{
-        flex-direction: column;
-        gap: 16px;
-        .base-column,
-        .count-column{
-            width: 100%;
-        }
-        .base-column{
-            padding: 24px 16px;
-            .title{
-                font-size: 21px;
-                margin-bottom: 24px;
-            }
-            .form-group{
-                margin-bottom: 24px;
-                .form-select{
-                    gap: 8px;
-                    .select-box{
-                        flex: 1;
-                        select{
-                            width: 100%;
-                        }
-                    }
-                }
-                .radio-box{
-                    flex-direction: column;
-                    gap: 10px;
-                    .form-radio{
-                        width: 100%;
-                    }
-                }
-            }
-        }
-        .count-column{
-            .card{
-                padding: 20px 14px;
-            }
-            .submit-btn{
-                height: 44px;
-                font-size: 15px;
-            }
-            .others-sec{
-                margin-top: 16px;
-                .others{
-                    padding-top: 18px;
-                }
-                .sales-sec{
-                    gap: 12px;
-                }
-            }
-        }
     }
 }

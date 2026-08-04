@@ -1,64 +1,62 @@
-(function () {
+(function (window, document) {
     'use strict';
     if (!window.XenicalTracker) return;
-    var T = XenicalTracker;
-    var page = window.__TRACKING_PAGE__ || {};
+
+    var MILESTONES = [25, 50, 75, 100];
     var sent = {};
+    var ctx = XenicalTracker.getPageContext();
 
-    T.track('content_enter', 'content.enter', {
-        section: 'content',
-        metadata: filterMeta()
-    });
-
-    function filterMeta() {
-        var m = {};
-        if (page.article_id) m.article_id = page.article_id;
-        if (page.cms_uri) m.cms_uri = page.cms_uri;
-        return m;
+    function targetEl() {
+        return document.querySelector('[data-track-scroll-target], .news-content, .page-body');
     }
 
-    var content = document.querySelector('.article-content, #articleContent, #spageContent, .news-main .article-content');
-    if (content && window.IntersectionObserver) {
-        var milestones = [25, 50, 75, 100];
-        var io = new IntersectionObserver(function () {
-            var rect = content.getBoundingClientRect();
-            var ch = window.innerHeight;
-            var visible = Math.max(0, Math.min(rect.bottom, ch) - Math.max(rect.top, 0));
-            var total = rect.height || 1;
-            var pct = Math.min(100, Math.floor((visible / total) * 100));
-            var scrolled = Math.min(100, Math.floor(((ch - rect.top) / (rect.height + ch)) * 100));
-            var progress = Math.max(pct, scrolled);
-            if (progress > T.getReadProgress()) T.setReadProgress(progress);
-            milestones.forEach(function (m) {
-                if (progress >= m && !sent[m]) {
-                    sent[m] = true;
-                    T.track('read_progress', 'content.read.' + m, {
-                        section: 'content.body',
-                        metadata: { percent: m, scroll_target: 'article', article_id: page.article_id || '' }
-                    });
-                }
-            });
-        }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
-        io.observe(content);
-        window.addEventListener('scroll', function () { io.takeRecords(); }, { passive: true });
+    function readPct() {
+        var el = targetEl();
+        if (!el) return XenicalTracker.scrollPct ? XenicalTracker.scrollPct() : 0;
+        var st = el.scrollTop || 0, ch = el.clientHeight || 0, sh = el.scrollHeight || 0;
+        if (sh <= ch) return 100;
+        return Math.min(100, Math.max(0, Math.floor(((st + ch) / sh) * 100)));
     }
 
-    document.querySelectorAll('.faq-question, .article-summary button').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            var expanded = btn.getAttribute('aria-expanded') === 'true';
-            T.track(expanded ? 'toc_collapse' : 'toc_expand', 'content.toc.toggle', {
-                section: 'content.toc',
-                metadata: { expanded: !expanded, heading_id: btn.id || '' }
-            });
-        });
+    function onReadScroll() {
+        var p = readPct();
+        XenicalTracker.setMaxReadProgress(p);
+        for (var i = 0; i < MILESTONES.length; i++) {
+            var m = MILESTONES[i];
+            if (p >= m && !sent[m]) {
+                sent[m] = true;
+                var meta = { percent: m, scroll_target: elSelector() };
+                if (ctx.article_id) meta.article_id = ctx.article_id;
+                if (ctx.cms_uri) meta.cms_uri = ctx.cms_uri;
+                XenicalTracker.track('read_progress', 'read.' + m, { section: 'content', label: '閱讀進度', metadata: meta });
+            }
+        }
+    }
+
+    function elSelector() {
+        if (document.querySelector('[data-track-scroll-target]')) return '[data-track-scroll-target]';
+        if (document.querySelector('.news-content')) return '.news-content';
+        return '.page-body';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var el = targetEl();
+        if (!el) return;
+        var meta = {};
+        if (ctx.article_id) meta.article_id = ctx.article_id;
+        if (ctx.cms_uri) meta.cms_uri = ctx.cms_uri;
+        XenicalTracker.track('content_enter', 'content.enter', { section: 'content', label: '進入正文', metadata: meta });
+        window.addEventListener('scroll', onReadScroll, { passive: true });
+        el.addEventListener('scroll', onReadScroll, { passive: true });
+        onReadScroll();
     });
 
     window.addEventListener('pagehide', function () {
-        if (!T.hasProductClicked()) {
-            T.track('content_abandon', 'content.abandon', {
-                section: 'content',
-                metadata: { max_read_progress: T.getReadProgress(), article_id: page.article_id || '' }
-            });
-        }
+        var max = XenicalTracker.getMaxReadProgress();
+        if (max < 10) return;
+        var meta = { max_read_progress: max };
+        if (ctx.article_id) meta.article_id = ctx.article_id;
+        if (ctx.cms_uri) meta.cms_uri = ctx.cms_uri;
+        XenicalTracker.track('content_abandon', 'content.abandon', { section: 'content', label: '內容未完成閱讀', metadata: meta });
     });
-})();
+})(window, document);

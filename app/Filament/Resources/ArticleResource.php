@@ -70,14 +70,9 @@ class ArticleResource extends Resource
 
                 Forms\Components\Section::make('內容')
                     ->schema([
-                        Forms\Components\RichEditor::make('content')
+                        \App\Filament\Components\WangEditor::make('content')
                             ->label('文章內容')
-                            ->toolbarButtons([
-                                'bold', 'italic', 'underline', 'strike',
-                                'link', 'orderedList', 'bulletList',
-                                'h2', 'h3', 'blockquote',
-                                'redo', 'undo',
-                            ]),
+                            ->columnSpanFull(),
                     ]),
 
                 Forms\Components\Section::make('SEO設定')

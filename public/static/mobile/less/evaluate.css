@@ -1,358 +1,187 @@
-.wrapper {
-  width: 100%;
-  padding: 0 2rem;
+.evaluate-container {
+  margin-top: 4rem;
+  padding-bottom: 6rem;
 }
-.wrapper .evaluate-sec {
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 2rem;
-  padding: 3rem 2rem;
-  margin-bottom: 3rem;
+.evaluate-container .evaluate-form {
+  margin-bottom: 7rem;
+  padding: 0 1.5rem;
 }
-.wrapper .evaluate-sec .sec-title {
-  font-weight: 500;
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  text-align: center;
+.evaluate-container .evaluate-form .form-group {
+  margin-bottom: 2.6rem;
 }
-.wrapper .evaluate-sec .calculate {
-  flex-shrink: 0;
+.evaluate-container .evaluate-form .form-group .title {
+  font-size: 1.6rem;
+  margin-bottom: 1.6rem;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form {
-  border: 1.5px dashed #ff9b3f;
-  padding: 2rem;
-  border-radius: 2rem;
-  margin-bottom: 2rem;
-}
-.wrapper .evaluate-sec .calculate .evaluate-form .form-group {
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
-.wrapper .evaluate-sec .calculate .evaluate-form .form-group .form-title {
-  font-size: 1.3rem;
-  flex-shrink: 0;
-}
-.wrapper .evaluate-sec .calculate .evaluate-form .form-group .form-inline {
+.evaluate-container .evaluate-form .form-group .form-inline {
   display: flex;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form .form-group .form-inline .radio-inline {
-  margin-right: 24px;
+.evaluate-container .evaluate-form .form-group .form-inline .radio-inline {
+  margin-right: 2.4rem;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form .form-group .form-inline .radio-inline input[type=radio] {
+.evaluate-container .evaluate-form .form-group .form-inline .radio-inline input[type=radio] {
   display: none;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form .form-group .form-inline .radio-inline label {
-  width: 86px;
-  height: 48px;
+.evaluate-container .evaluate-form .form-group .form-inline .radio-inline label {
+  width: 8.6rem;
+  height: 4.8rem;
   background: #D8D8D8;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  font-size: 1.6rem;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form .form-group .form-inline .radio-inline input[type=radio]:checked + label {
+.evaluate-container .evaluate-form .form-group .form-inline .radio-inline input[type=radio]:checked + label {
   background: #ff9b3e;
   color: #fff;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form .form-group .radio-row {
-  margin-bottom: 10px;
+.evaluate-container .evaluate-form .form-group .radio-row {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form .form-group .form-control {
-  width: 8rem;
-  height: 3.2rem;
-  border-radius: 6px;
-  border: 1.5px solid #979797;
+.evaluate-container .evaluate-form .form-group .radio-row label {
+  font-size: 1.4rem;
+  margin-left: 1rem;
+}
+.evaluate-container .evaluate-form .form-group .form-control {
+  width: 100%;
+  height: 4rem;
+  font-size: 16px;
+  border: 0.1rem solid #979797;
   background-color: transparent;
-  font-size: 1.6rem;
-  text-align: center;
+  padding: 0 2.6rem;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form .form-group .form-control:focus {
+.evaluate-container .evaluate-form .form-group .form-control:focus {
   border-color: #ff9b3e;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form .btns {
-  display: flex;
-  gap: 1rem;
-}
-.wrapper .evaluate-sec .calculate .evaluate-form .btns .reset {
-  flex: 1;
-  border: 1.5px solid #ff9b3f;
-  color: #000;
-  transition: all 0.3s;
-}
-.wrapper .evaluate-sec .calculate .evaluate-form .btns .reset:hover {
-  color: #ff9b3f;
-}
-.wrapper .evaluate-sec .calculate .evaluate-form .btns .count {
-  flex: 2;
-  background: #ff9b3f;
+.evaluate-container .evaluate-form .count-btn a {
+  background: #ff9b3e;
   color: #fff;
-}
-.wrapper .evaluate-sec .calculate .evaluate-form .btns a {
   width: 100%;
-  padding: 0.5rem 0;
-  border-radius: 99px;
-  text-align: center;
+  height: 4rem;
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 1;
-  font-size: 1.3rem;
-  font-weight: 500;
+  align-items: center;
+  font-size: 1.6rem;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form .privacy-note {
-  margin-top: 1rem;
-  font-size: 1rem;
-  color: rgba(0, 0, 0, 0.5);
+.evaluate-container .ending {
+  padding: 0 1.5rem;
+}
+.evaluate-container .ending .figure {
+  width: 100%;
+  margin: 0 auto;
+  border: 0.1rem solid #ccc;
+  padding: 2rem;
   text-align: center;
 }
-.wrapper .evaluate-sec .calculate .evaluate-form .privacy-note a {
-  color: rgba(0, 0, 0, 0.5);
-  text-decoration: underline;
+.evaluate-container .ending .figure .title {
+  font-size: 1.4rem;
 }
-.wrapper .evaluate-sec .result {
+.evaluate-container .ending .figure .result {
+  font-size: 7.2rem;
+}
+.evaluate-container .ending .figure .col {
   margin-bottom: 3rem;
 }
-.wrapper .evaluate-sec .result .result-num {
-  font-size: 3.2rem;
-  font-weight: 500;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
+.evaluate-container .ending .figure .col:last-child {
+  margin-bottom: 0;
 }
-.wrapper .evaluate-sec .result .result-num .dot {
-  display: inline-block;
-  font-weight: 500;
-  font-size: 3.2rem;
-  line-height: 3.2rem;
-  padding: 0 2px;
+.evaluate-container .ending .propose {
+  margin-top: 2.4rem;
 }
-.wrapper .evaluate-sec .result .result-num .digit {
-  display: inline-block;
-  width: 1ch;
-  height: 3.2rem;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-}
-.wrapper .evaluate-sec .result .result-num .digit .digit-inner {
-  display: flex;
-  flex-direction: column;
-  transition: transform 1s ease-out;
-  transform: translateY(0);
-}
-.wrapper .evaluate-sec .result .result-num .digit .digit-inner span {
-  display: block;
-  height: 3.2rem;
-  line-height: 3.2rem;
-}
-.wrapper .evaluate-sec #int1.animate::after {
-  animation-delay: 0s;
-}
-.wrapper .evaluate-sec #int2.animate::after {
-  animation-delay: 0.3s;
-}
-.wrapper .evaluate-sec #dec1.animate::after {
-  animation-delay: 0.6s;
-}
-.wrapper .evaluate-sec .comparison {
-  width: 100%;
-}
-.wrapper .evaluate-sec .comparison .bmi-table {
-  width: 100%;
-  font-size: 1.3rem;
-  border-radius: 1rem;
-  overflow: hidden;
-  text-align: center;
-}
-.wrapper .evaluate-sec .comparison .bmi-table thead th {
-  background-color: #e0f2ff;
-  color: #424241;
-  padding: 1.6rem 1rem;
-  white-space: nowrap;
-  font-weight: 500;
-}
-.wrapper .evaluate-sec .comparison .bmi-table thead th:nth-child(2) {
-  border-right: 1.5px solid #FFF;
-  border-left: 1.5px solid #FFF;
-}
-.wrapper .evaluate-sec .comparison .bmi-table tbody td {
-  padding: 1.2rem 1rem;
-  vertical-align: top;
-  color: #fff;
-}
-.wrapper .evaluate-sec .comparison .bmi-table tbody td:nth-child(2) {
-  border-right: 1.5px solid #FFF;
-  border-left: 1.5px solid #FFF;
-}
-.wrapper .evaluate-sec .comparison .bmi-table tbody .bmi-underweight {
-  background-color: #ecd300;
-}
-.wrapper .evaluate-sec .comparison .bmi-table tbody .bmi-normal {
-  background-color: #6bc518;
-}
-.wrapper .evaluate-sec .comparison .bmi-table tbody .bmi-overweight {
-  background-color: #eb9800;
-}
-.wrapper .evaluate-sec .comparison .bmi-table tbody .bmi-obese {
-  background-color: #e63b08;
-}
-.wrapper .editor {
-  width: 100%;
-  border-radius: 2rem;
-  padding: 3rem 2rem;
-  background-color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 6rem;
-  font-size: 1.4rem;
-  line-height: 1.6;
-}
-.wrapper .editor h2 {
-  font-size: 1.8rem;
-  margin: 3rem 0 2rem;
-}
-.wrapper .editor h3 {
-  font-size: 1.6rem;
-  margin: 3rem 0 2rem;
-}
-.wrapper .editor * {
+.evaluate-container .ending .propose .title {
+  font-size: 2.4rem;
   margin-bottom: 2rem;
 }
-.wrapper .page-news {
+.evaluate-container .ending .propose .explain {
+  font-size: 1.4rem;
+}
+.evaluate-container .ending .wares {
+  margin-top: 3.6rem;
   width: 100%;
-  margin-bottom: 6rem;
-}
-.wrapper .page-news .sec-title {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-.wrapper .page-news .item .info {
-  display: block;
-  background-color: #FFF;
+  background: #FFFFFF;
+  box-shadow: 0rem 0.4rem 1.5rem 0rem rgba(0, 0, 0, 0.1);
   border-radius: 3rem;
-  overflow: hidden;
-  margin-bottom: 30px;
+  padding: 3rem 1.5rem;
 }
-.wrapper .page-news .item .info .Img {
-  position: relative;
-  overflow: hidden;
+.evaluate-container .ending .wares .goods {
+  display: flex;
+}
+.evaluate-container .ending .wares .goods .img-wrap {
+  width: 14.8rem;
+  min-height: 14.8rem;
+}
+.evaluate-container .ending .wares .goods .img-wrap img {
   width: 100%;
-  padding: 2rem 2rem 0;
 }
-.wrapper .page-news .item .info .Img img {
-  -webkit-transition: all 0.5s ease-out;
-  -o-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
-  border-radius: 1.2rem 1.2rem 0 0;
+.evaluate-container .ending .wares .goods .info {
+  margin-left: 1.5rem;
 }
-.wrapper .page-news .item .info .Txt {
-  padding: 2rem;
-  width: 100%;
-  word-wrap: break-word;
-  word-break: break-word;
-  white-space: normal;
+.evaluate-container .ending .wares .goods .info .goods-title {
+  font-size: 2rem;
+}
+.evaluate-container .ending .wares .goods .info .tags {
+  margin: 1.2rem 0;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
-.wrapper .page-news .item .info .Txt .newsInfoIdxBox {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1.5px solid #ffdec1;
-}
-.wrapper .page-news .item .info .Txt .newsInfoIdxBox .newsDateBox {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  color: #000;
-  line-height: 1;
-  letter-spacing: 0;
-  font-weight: 700;
-  padding: 0 15px;
-  margin-right: 15px;
-  border-right: 1.5px solid #ffdec1;
-  flex-shrink: 0;
-}
-.wrapper .page-news .item .info .Txt .newsInfoIdxBox .newsDateBox .day {
-  font-size: 24px;
-}
-.wrapper .page-news .item .info .Txt .newsInfoIdxBox .newsDateBox .ym {
-  font-size: 12px;
-}
-.wrapper .page-news .item .info .Txt .newsInfoIdxBox .news-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #191919;
-}
-.wrapper .page-news .item .info .Txt .sub {
-  margin-bottom: auto;
-  -webkit-transition: all 0.5s ease-out;
-  -o-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
-  overflow-wrap: break-word;
-  color: #6f6f6f;
+.evaluate-container .ending .wares .goods .info .tags span {
+  padding: 0.4rem 0.8rem;
   font-size: 1.2rem;
-  padding: 0 1rem;
-  text-align: justify;
+  border: 0.1rem solid #979797;
+  border-radius: 0.4rem;
+  margin-bottom: 0.4rem;
 }
-.wrapper .page-news .item .info .Txt .go {
-  font-size: 1.3rem;
-  font-weight: 500;
+.evaluate-container .ending .wares .goods .info .attrs {
+  font-size: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+.evaluate-container .ending .wares .goods .info .price {
+  margin-bottom: 2rem;
+}
+.evaluate-container .ending .wares .goods .info .price span {
+  display: block;
+}
+.evaluate-container .ending .wares .goods .info .price .now {
+  font-size: 2rem;
+}
+.evaluate-container .ending .wares .goods .info .price .discount {
+  padding: 0.4rem 0.8rem;
+  font-size: 1.2rem;
+  background: #D8D8D8;
+  border-radius: 0.4rem;
+}
+.evaluate-container .ending .wares .goods .info .go-btn {
+  width: 15.2rem;
+  height: 3.8rem;
+  border-radius: 1.9rem;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: end;
-  transition: all 0.3s;
-  color: #ff9b3f;
+  color: #fff;
+  background-color: #ff9b3e;
+  font-size: 1.6rem;
 }
-.wrapper .page-news .item .info .Txt .go i {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-left: 4px;
-  animation: goList 1s infinite;
+.evaluate-container .editor {
+  padding: 0 1.5rem;
+  font-size: 1.4rem;
 }
-.wrapper .page-news .item.show {
-  transform: translateY(0);
-  opacity: 1;
+.evaluate-container .editor h2 {
+  margin-bottom: 2rem;
 }
-.wrapper .page-news .item.show .info .Img {
-  -webkit-transform: translate(0);
-  -ms-transform: translate(0);
-  transform: translate(0);
-  opacity: 1;
+.evaluate-container .editor h2 span {
+  font-size: 2.2rem !important;
 }
-.wrapper .page-news .item.show .info .Txt .newsInfoIdxBox {
-  -webkit-transform: translate(0);
-  -ms-transform: translate(0);
-  transform: translate(0);
-  opacity: 1;
-  -webkit-transition-delay: 0.5s;
-  -o-transition-delay: 0.5s;
-  transition-delay: 0.5s;
+.evaluate-container .editor p {
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
 }
-.wrapper .page-news .item.show .info .Txt .sub {
-  -webkit-transform: translateY(0);
-  -ms-transform: translateY(0);
-  transform: translateY(0);
-  opacity: 1;
-  -webkit-transition-delay: 0.7s;
-  -o-transition-delay: 0.7s;
-  transition-delay: 0.7s;
+.evaluate-container .editor ul {
+  list-style: disc;
+  margin: 0 0 1.5em 3em;
 }
-.wrapper .page-news .item.show .info p {
-  -webkit-transition-delay: 0.7s;
-  -o-transition-delay: 0.7s;
-  transition-delay: 0.7s;
-}
-.wrapper .page-news .item:first-child {
-  transition-delay: 1s;
+.evaluate-container .editor li {
+  list-style: disc;
+  margin-bottom: 1.8rem;
 }

@@ -29,7 +29,7 @@
         <div class="wares">
             <div class="goods">
                 <div class="img-wrap">
-                    <img src="{{ asset_upload($goods->img) }}" alt="{{ $goods->name }}" loading="lazy" width="240" height="240">
+                    <img src="{{ asset_upload($goods->img) }}" alt="{{ $goods->name }}" loading="lazy" decoding="async">
                 </div>
                 <div class="info">
                     <p class="goods-title">{{ $goods->name }}</p>
@@ -55,7 +55,7 @@
                         @endif
                     </div>
                 </div>
-                <a class="go-btn" href="{{ url('checkout/'.$goods->id) }}" data-observer="立即購買-推荐" data-track-section="calculator" data-track-name="calc.recommend.buy">立即購買</a>
+                <a class="go-btn" data-track-calc-recommend data-track-section="calc.result" data-track-name="calc.recommend.checkout" data-observer="計算器推薦訂購" href="{{ url('checkout/'.$goods->id) }}">立即訂購</a>
             </div>
         </div>
         @endif

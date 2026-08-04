@@ -196,10 +196,9 @@ if (! function_exists('template')) {
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     function template($view = null, $data = [], $mergeData = []){
-        /* $device = \App\Handlers\DeviceTypeHandlers::isMobile()?"mobile":"web";
+        $device = \App\Handlers\DeviceTypeHandlers::isMobile() ? 'mobile' : 'web';
 
-        return view($device.'::'.$view,$data,$mergeData); */
-        return view('web::'.$view, $data, $mergeData);
+        return view($device.'.'.$view, $data, $mergeData);
     }
 }
 
@@ -207,6 +206,15 @@ if (! function_exists('template')) {
 
 function is_mobile(){
     return \App\Handlers\DeviceTypeHandlers::isMobile();
+}
+
+if (! function_exists('is_googlebot')) {
+    function is_googlebot()
+    {
+        $user_agent = request()->header('user-agent');
+
+        return preg_match('/(Googlebot|Chrome-Lighthouse)/i', $user_agent);
+    }
 }
 
 if (! function_exists('vite_tags')) {

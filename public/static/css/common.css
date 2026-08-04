@@ -6,15 +6,25 @@ html{
 }
 
 body{
+
+    display: flex;
+    flex-direction: column;
+    min-width: 1200px;
     letter-spacing: 1px;
     position: relative;
 }
 
 img{
     display: block;
-    width: 100%;
 }
 
+
+
+.wrapper{
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
 
 * {
     margin: 0px;

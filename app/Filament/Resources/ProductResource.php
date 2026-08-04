@@ -16,6 +16,8 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cube';
 
+    protected static ?string $navigationGroup = '商品管理';
+
     protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationLabel = '商品管理';
@@ -85,14 +87,9 @@ class ProductResource extends Resource
 
                 Forms\Components\Section::make('商品描述')
                     ->schema([
-                        Forms\Components\RichEditor::make('describe')
+                        \App\Filament\Components\WangEditor::make('describe')
                             ->label('商品描述')
-                            ->toolbarButtons([
-                                'bold', 'italic', 'underline', 'strike',
-                                'link', 'orderedList', 'bulletList',
-                                'h2', 'h3', 'blockquote',
-                                'redo', 'undo',
-                            ]),
+                            ->columnSpanFull(),
                     ]),
             ]);
     }

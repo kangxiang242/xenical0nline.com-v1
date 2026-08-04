@@ -1,19 +1,15 @@
 .container-bg {
+  background: #fff url(/static/img/cb_tea_top.png) no-repeat fixed;
   background-size: cover;
-  position: fixed;
-  width: 100%;
-  height: calc(100vh - 80px);
-  z-index: -1;
+  position: relative;
 }
-.en-title {
-  padding-top: 100px;
-}
-.page-title {
-  text-align: center;
-  font-size: 36px;
-  font-weight: 500;
+.container-bg .bg-text {
   color: #fff;
-  margin-bottom: 100px;
+  font-size: 50px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 .page-main {
   text-align: center;
@@ -29,221 +25,94 @@
   color: #fff;
   font-size: 32px;
 }
-.main {
-  max-width: 1200px;
-  width: 100%;
-  padding: 0 10px;
-  margin: 0 auto 200px;
+.message-container .side {
+  width: 1140px;
+  margin: 0 auto;
   display: flex;
-  gap: 60px;
   justify-content: space-between;
 }
-.main .quick,
-.main .contact {
-  flex: 1;
-  padding: 60px 40px;
-  border-radius: 30px;
-  background-color: #FFF;
-  transform: translateY(200px);
-  opacity: 0;
+.message-container .side .left-side {
+  width: 520px;
 }
-.main .quick {
-  animation: showup 1s 0.6s ease-in-out forwards;
+.message-container .side .right-side {
+  width: 520px;
 }
-.main .contact {
-  animation: showup 1s 1s ease-in-out forwards;
-}
-@keyframes showup {
-  0% {
-    opacity: 0;
-    transform: translateY(200px);
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.main .title {
-  font-size: 24px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-.main .desc {
-  font-size: 14px;
-  border-bottom: 1.5px solid #ffdec1;
+.message-container .side .head {
+  border-bottom: 1px solid #D8D8D8;
   padding-bottom: 20px;
-  margin-bottom: 40px;
-}
-.main .faq-item {
   margin-bottom: 20px;
-  border-radius: 12px;
-  border: 1.5px solid #ffd9b8;
-  overflow: hidden;
-  height: var(--collapsed-height, 60px);
-  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.main .faq-item[open] {
-  height: var(--expanded-height, auto);
+.message-container .side .head .title {
+  font-size: 24px;
 }
-.main .faq-item[open] .faq-question {
-  background-color: rgba(255, 255, 255, 0.7);
-  color: #ff9b3f;
+.message-container .side .head .desc {
+  font-size: 14px;
+  margin-top: 20px;
 }
-.main .faq-item[open] .faq-icon {
-  transform: rotate(180deg);
-}
-.main .faq-item.open {
-  height: var(--expanded-height, auto);
-}
-.main .faq-item.open .faq-question {
-  background-color: rgba(255, 255, 255, 0.7);
-  color: #ff9b3f;
-}
-.main .faq-item.open .faq-icon {
-  transform: rotate(180deg);
-}
-.main .faq-item .faq-question {
-  height: 60px;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-  background-color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-.main .faq-item .faq-question::-webkit-details-marker {
-  display: none;
-}
-.main .faq-item .faq-question .question-text {
+.message-container .side .body .fqa {
   font-size: 16px;
-  font-weight: 500;
-  color: #ff9b3f;
 }
-.main .faq-item .faq-question .faq-icon {
-  transition: transform 0.3s ease;
-  color: #ff9b3f;
-  font-weight: 700;
+.message-container .side .body .fqa li {
+  margin-bottom: 20px;
+  height: 21px;
+  overflow: hidden;
+  -moz-transition: all 0.3s cubic-bezier(0.1, 0, 0, 1);
+  -webkit-transition: all 0.3s cubic-bezier(0.1, 0, 0, 1);
+  -o-transition: all 0.3s cubic-bezier(0.1, 0, 0, 1);
+  -ms-transition: all 0.3s cubic-bezier(0.1, 0, 0, 1);
+  transition: all 0.3s cubic-bezier(0.1, 0, 0, 1);
 }
-.main .faq-item .faq-answer {
-  padding: 15px 60px;
+.message-container .side .body .fqa li .question {
+  font-size: 16px;
+}
+.message-container .side .body .fqa li .answers {
+  padding-top: 8px;
   font-size: 14px;
-  letter-spacing: 0;
-  line-height: 1.6;
-  color: #000;
-  background-color: #ffd9b8;
-  text-align: justify;
+  color: #999;
+  padding-left: 30px;
+  opacity: 0;
+  -moz-transition: all 0.3s cubic-bezier(0.1, 0, 0, 1);
+  -webkit-transition: all 0.3s cubic-bezier(0.1, 0, 0, 1);
+  -o-transition: all 0.3s cubic-bezier(0.1, 0, 0, 1);
+  -ms-transition: all 0.3s cubic-bezier(0.1, 0, 0, 1);
+  transition: all 0.3s cubic-bezier(0.1, 0, 0, 1);
 }
-.main .form-group {
+.message-container .side .body .fqa li.show {
+  height: calc(20px + var(--_height));
+}
+.message-container .side .body .fqa li.show .answers {
+  opacity: 1;
+}
+.message-container .side .body .form-main .form-group {
   display: flex;
-  margin-bottom: 30px;
-  gap: 20px;
-  align-items: baseline;
+  margin-bottom: 48px;
 }
-.main .form-group label {
+.message-container .side .body .form-main .form-group label {
   font-size: 14px;
+  width: 80px;
+  padding-top: 10px;
 }
-.main .form-group .form-control {
-  flex: 1;
+.message-container .side .body .form-main .form-group .form-control {
+  width: 440px;
   height: 40px;
-  border: 1.5px solid #ffdec1;
-  padding: 0 20px;
+  border: 1px solid #979797;
+  flex-shrink: 0;
+  padding: 0 26px;
   background-color: transparent;
-  border-radius: 6px;
 }
-.main .form-group .form-textarea {
-  height: 120px;
-  padding: 20px;
+.message-container .side .body .form-main .form-group .form-textarea {
+  height: 123px;
+  padding: 10px 26px;
 }
-.main .form-btn {
+.message-container .side .body .form-main .form-group .form-btn {
   width: 100%;
-  height: 48px;
-  background: #ffdec1;
+  height: 46px;
+  background: #C1C1C1;
   border: none;
   color: #fff;
   font-size: 16px;
-  border-radius: 8px;
-  font-weight: 500;
-  letter-spacing: 2px;
 }
-.main .form-btn.activate-btn {
-  background: #ff9b3f;
+.message-container .side .body .form-main .form-group .activate-btn {
+  background: #ff9b3e;
   color: #fff;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.main .form-btn.activate-btn:hover {
-  transform: scale(1.05);
-}
-@media screen and (max-width: 1024px) {
-  .container-bg {
-    height: 220px;
-    position: absolute;
-  }
-  .en-title {
-    padding-top: 34px;
-  }
-  .page-title {
-    font-size: 28px;
-    margin-bottom: 36px;
-  }
-  .main {
-    margin: 0 auto 60px;
-    padding: 0 14px;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .main .quick,
-  .main .contact {
-    padding: 24px 14px;
-    border-radius: 18px;
-    transform: none;
-    animation: none;
-    opacity: 1;
-  }
-  .main .title {
-    font-size: 22px;
-    margin-bottom: 14px;
-  }
-  .main .desc {
-    font-size: 15px;
-    line-height: 1.75;
-    margin-bottom: 20px;
-  }
-  .main .form-group {
-    flex-direction: column;
-    align-items: stretch;
-    margin-bottom: 18px;
-    gap: 8px;
-  }
-  .main .form-group label {
-    font-size: 15px;
-  }
-  .main .form-group .form-control {
-    height: 42px;
-    padding: 0 14px;
-  }
-  .main .form-group .form-textarea {
-    height: 110px;
-    padding: 12px 14px;
-  }
-  .main .faq-item .faq-question {
-    padding: 0 14px;
-  }
-  .main .faq-item .faq-question .question-text {
-    font-size: 15px;
-  }
-  .main .faq-item .faq-answer {
-    padding: 12px 14px;
-    font-size: 14px;
-    line-height: 1.75;
-  }
-  .main .form-btn {
-    height: 44px;
-  }
 }

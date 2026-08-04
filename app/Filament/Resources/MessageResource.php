@@ -16,7 +16,7 @@ class MessageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-ellipsis';
 
-    protected static ?string $navigationGroup = '內容管理';
+    protected static ?string $navigationGroup = '客服管理';
 
     protected static ?int $navigationSort = 3;
 

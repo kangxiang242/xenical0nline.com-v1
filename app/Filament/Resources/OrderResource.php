@@ -17,6 +17,8 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
+    protected static ?string $navigationGroup = '訂單管理';
+
     protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationLabel = '訂單管理';
@@ -212,10 +214,30 @@ class OrderResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkAction::make('hidden_dummy')->hidden(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('created_at', 'desc')
+            ->headerActions([
+                \Filament\Tables\Actions\ActionGroup::make([
+                    \Filament\Tables\Actions\Action::make('export_all')
+                        ->label('全部匯出')
+                        ->icon('heroicon-o-document-text')
+                        ->action('exportAll'),
+                    \Filament\Tables\Actions\Action::make('export_selected')
+                        ->label('匯出選中')
+                        ->icon('heroicon-o-check-circle')
+                        ->accessSelectedRecords()
+                        ->action(function ($livewire) {
+                            return $livewire->exportSelected();
+                        }),
+                ])
+                    ->label('匯出')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('primary')
+                    ->button(),
+            ]);
     }
 
     public static function getRelations(): array
@@ -232,5 +254,63 @@ class OrderResource extends Resource
             'create' => Pages\CreateOrder::route('/create'),
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
+    }
+
+    public static function buildExportData($orders): array
+    {
+        $data = [];
+        foreach ($orders as $item) {
+            $productTxt = '';
+            foreach ($item->products as $k => $vv) {
+                $productTxt .= $vv->product_name . "({$vv->unit_price}/件)*{$vv->number}";
+                if (($k + 1) < count($item->products)) {
+                    $productTxt .= PHP_EOL;
+                }
+            }
+
+            // Address format
+            if ($item->delivery_type > 0) {
+                $shopTypeName = isset(Order::SHOP_TYPE_TXT[$item->shop_type])
+                    ? Order::SHOP_TYPE_TXT[$item->shop_type] : '超商';
+                $addr = $item->address . "（{$shopTypeName}{$item->shop_name}門市{$item->shop_no}自取件）電話通知到店取貨";
+            } else {
+                // Time calculation for home delivery
+                if ($item->delivery_time == 1) {
+                    $gettime = '11:20:00';
+                } elseif ($item->delivery_time == 2) {
+                    $gettime = '14:35:00';
+                } else {
+                    $gettime = '18:50:00';
+                }
+                $parts = explode(':', $gettime);
+                if ($parts[1] == '55') {
+                    $parts[1] = '00';
+                    $parts[0] = (int)$parts[0] + 1;
+                } else {
+                    $parts[1] = (int)$parts[1] + 5;
+                }
+                $updateGetTime = sprintf('%02d:%02d:00', $parts[0], $parts[1]);
+                $addr = "{$item->city}{$item->county}{$item->street}{$item->address}-請於{$updateGetTime}前送達";
+            }
+
+            $deliveryTime = $item->delivery_time
+                ? (Order::DELIVERY_TIME[$item->delivery_time] ?? '') : '';
+
+            $data[] = [
+                $item->no,
+                $item->inside_no,
+                $productTxt,
+                $item->total_price,
+                $item->name,
+                $item->phone,
+                $item->email,
+                $addr,
+                Order::DELIVERY_TYPE_TXT[$item->delivery_type] ?? '',
+                $deliveryTime,
+                $item->remarks,
+                Order::STATUS_TXT[$item->status] ?? $item->status,
+            ];
+        }
+        return $data;
     }
 }

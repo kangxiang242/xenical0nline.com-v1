@@ -1,27 +1,31 @@
-.main-wrapper {
-  width: 100%;
-  padding: 0 2rem;
+.page-container {
+  margin-top: 2rem;
+  padding: 0 1.5rem;
   margin-bottom: 6rem;
 }
-.main-wrapper .title {
-  font-size: 2.6rem;
+.page-container .page-main {
+  width: 100%;
+}
+.page-container .page-main .title {
+  font-size: 3rem;
   text-align: center;
   font-weight: 500;
-  padding-bottom: 1rem;
-  border-bottom: 1.5px solid #ffdec1;
-  margin-bottom: 3rem;
+  border-bottom: 0.1rem solid #ddd;
+  padding-bottom: 2rem;
 }
-.main-wrapper .page-body h2,
-.main-wrapper .page-body h3 {
-  font-weight: 500;
+.page-container .page-main .page-body {
   margin-top: 2rem;
+  padding: 0 1.5rem;
 }
-.main-wrapper .page-body p,
-.main-wrapper .page-body span {
-  font-size: 1.4rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
+.page-container .page-main .page-body img {
+  width: 100%;
 }
-.breadcrumb {
-  padding: 1rem 0;
+.page-container .page-main .page-body h1,
+.page-container .page-main .page-body h2,
+.page-container .page-main .page-body h3 {
+  font-weight: 500;
+}
+.page-container .page-main .page-body p,
+.page-container .page-main .page-body span {
+  font-size: 1.4rem !important;
 }

@@ -21,10 +21,6 @@ class CreateProductFaqsTable extends Migration
             $table->integer('sort')->default(0);
             $table->timestamps();
         });
-
-        Schema::table('products', function (Blueprint $table) {
-            $table->integer('discount_percent')->default(0)->after('market_price');
-        });
     }
 
     /**

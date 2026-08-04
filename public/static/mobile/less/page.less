@@ -1,31 +1,29 @@
-@block-bg: #ffdec1;
-@main-color: #ff9b3f;
-.main-wrapper{
-    width: 100%;
-    padding: 0 2rem;
+.page-container{
+    margin-top: 2rem;
+    padding: 0 1.5rem;
     margin-bottom: 6rem;
-
-    .title{
-        font-size: 2.6rem;
-        text-align: center;
-        font-weight: 500;
-        padding-bottom: 1rem;
-        border-bottom: 1.5px solid @block-bg;
-        margin-bottom: 3rem;
-    }
-    .page-body{
-        h2,h3{
+    .page-main{
+        width: 100%;
+        .title{
+            font-size: 3rem;
+            text-align: center;
             font-weight: 500;
-            margin-top: 2rem;
+            border-bottom: 0.1rem solid #ddd;
+            padding-bottom: 2rem;
+
         }
-        p,span{
-            font-size: 1.4rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+        .page-body{
+            margin-top: 2rem;
+            padding: 0 1.5rem;
+            img{
+                width: 100%;
+            }
+            h1,h2,h3{
+                font-weight: 500;
+            }
+            p,span{
+                font-size: 1.4rem!important;
+            }
         }
     }
-    
-}
-.breadcrumb{
-    padding: 1rem 0;
 }
