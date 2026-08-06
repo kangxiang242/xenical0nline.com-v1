@@ -693,7 +693,7 @@
                 @foreach($for_people as $key=>$item)
                 <div class="item" data-parallax='{"y": {{ $people_key%2==0?'-':'' }}100}'>
                     <div class="box">
-                        <img src="{{ asset('uploads/'.$item->img) }}" alt="{{ $item->text }}" loading="lazy" decoding="async">
+                        <img src="{{ asset('uploads/'.($item->img ?? '')) }}" alt="{{ $item->text }}" loading="lazy" decoding="async">
                     </div>
                     <p class="text">{{ $item->text }}</p>
                 </div>

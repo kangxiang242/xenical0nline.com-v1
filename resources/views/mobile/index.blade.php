@@ -638,7 +638,7 @@
             @foreach($for_people as $item)
                 <div class="item">
                     <div class="box">
-                        <img src="{{ asset('uploads/'.$item->img) }}" alt="{{ $item->text }}" loading="lazy" decoding="async">
+                        <img src="{{ asset('uploads/'.($item->img ?? '')) }}" alt="{{ $item->text }}" loading="lazy" decoding="async">
                     </div>
                     <p class="text">{{ $item->text }}</p>
                 </div>
