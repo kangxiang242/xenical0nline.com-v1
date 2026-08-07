@@ -53,17 +53,6 @@ class NewsController extends Controller
             ->limit(6)
             ->get();
 
-        if ($cate) {
-            // 本站特有：分類文章列表（/news/{uri}）保留原站視圖
-            return template('news.index-cate', compact(
-                'news',
-                'cate',
-                'topicsTags',
-                'top',
-                'isEffectMode'
-            ));
-        }
-
         return template('news.index', compact(
             'news',
             'cate',
@@ -168,7 +157,7 @@ class NewsController extends Controller
         // Get tags for this article
         $articleTags = app(ArticleTagRepository::class)->getByArticleId($news->id);
 
-        return template('news.show-cate', compact(
+        return template('news.show', compact(
             'news',
             'content',
             'toc',

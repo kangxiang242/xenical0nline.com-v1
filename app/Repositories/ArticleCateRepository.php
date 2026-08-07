@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 
 
+
 use App\Models\ArticleCate;
 
 class ArticleCateRepository extends Repository

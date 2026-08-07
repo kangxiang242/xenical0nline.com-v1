@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'defend' => \App\Http\Middleware\DefendMiddleware::class,
             'redirect.device' => \App\Http\Middleware\RedirectDeviceMiddleware::class,
             'access.log' => \App\Http\Middleware\AccessLogMiddleware::class,
+            'googlebot.checked' => \App\Http\Middleware\GooglebotChecked::class,
         ]);
 
         $middleware->web(prepend: [

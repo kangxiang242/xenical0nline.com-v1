@@ -27,7 +27,7 @@ class ComposerServiceProvider extends ServiceProvider
         View::share('period', LayoutComposer::morningPeriod());
 
         view()->composer(
-            ['web.layout','mobile.layout','web.layout.layout'],     //模板名
+            ['web.layout.layout','web::layout.layout','mobile::layout'],     //模板名
             'App\Http\Composers\LayoutComposer@all'    //方法名或者类中的方法
         );
 

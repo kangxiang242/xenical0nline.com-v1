@@ -1,881 +1,1025 @@
-@extends('web.layout')
+@extends('web::layout.layout')
+
+@section('body_attributes', 'data-page="home"')
 
 @section('style')
     @parent
-    <link rel="stylesheet" type="text/css" href="{{ asset('static/less/index.css') }}?ver={{ config('app.asset_version') }}"/>
-
-    <style>
-        .swiper-container {
-            height: 100vh;
-        }
-
-        .swiper-slide {
-            overflow: hidden;
-        }
-
-        .slide-inner {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0;
-            top: 0;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .splitting.-aos-active .char {
-            -webkit-animation: splitting 1.2s cubic-bezier(.245,.495,0,.99) forwards;
-            animation: splitting 1.2s cubic-bezier(.245,.495,0,.99) forwards;
-            -webkit-animation-delay: calc(30ms*var(--char-index));
-            animation-delay: calc(30ms*var(--char-index))
-        }
-
-        .splitting .word {
-            display: inline-block;
-            overflow: hidden
-        }
-
-        .splitting .char {
-            display: inline-block;
-            -webkit-transform: translate3d(0,100%,0);
-            transform: translate3d(0,100%,0);
-            opacity: 0
-        }
-
-        @-webkit-keyframes splitting {
-            to {
-                opacity: 1;
-                -webkit-transform: translate3d(0,0,0);
-                transform: translate3d(0,0,0)
-            }
-        }
-
-        @keyframes splitting {
-            to {
-                opacity: 1;
-                -webkit-transform: translate3d(0,0,0);
-                transform: translate3d(0,0,0)
-            }
-        }
-
-        @-webkit-keyframes splitting-in {
-            0% {
-                opacity: 1;
-                -webkit-transform: translate3d(0,100%,0);
-                transform: translate3d(0,100%,0)
-            }
-
-            to {
-                opacity: 1;
-                -webkit-transform: translate3d(0,0,0);
-                transform: translate3d(0,0,0)
-            }
-        }
-
-        @keyframes splitting-in {
-            0% {
-                opacity: 1;
-                -webkit-transform: translate3d(0,100%,0);
-                transform: translate3d(0,100%,0)
-            }
-
-            to {
-                opacity: 1;
-                -webkit-transform: translate3d(0,0,0);
-                transform: translate3d(0,0,0)
-            }
-        }
-
-        @-webkit-keyframes splitting-out {
-            0% {
-                opacity: 1;
-                -webkit-transform: translate3d(0,0,0);
-                transform: translate3d(0,0,0)
-            }
-
-            to {
-                opacity: 0;
-                -webkit-transform: translate3d(0,-100%,0);
-                transform: translate3d(0,-100%,0)
-            }
-        }
-
-        @keyframes splitting-out {
-            0% {
-                opacity: 1;
-                -webkit-transform: translate3d(0,0,0);
-                transform: translate3d(0,0,0)
-            }
-
-            to {
-                opacity: 0;
-                -webkit-transform: translate3d(0,-100%,0);
-                transform: translate3d(0,-100%,0)
-            }
-        }
-
-
-
-        .text-animation-main {
-            width: 100%;
-            height: 100%;
-
-            top: 0;
-            left: 0;
-            display: block;
-            opacity: 0;
-            -webkit-transition: opacity 3s;
-            transition: opacity 3s
-        }
-
-        .text-animation-main .splitting.-aos-active .char {
-            -webkit-transform: translate(0) scaleY(1) rotateX(0) rotate(0);
-            transform: translate(0) scaleY(1) rotateX(0) rotate(0);
-            -webkit-animation: none;
-            animation: none;
-            -webkit-animation-delay: calc(30ms*var(--char-index));
-            animation-delay: calc(30ms*var(--char-index))
-        }
-
-        .text-animation-main.-show {
-            opacity: 1;
-            z-index: 2;
-            -webkit-transition: opacity 2s;
-            transition: opacity 2s;
-            pointer-events: all
-        }
-
-        .text-animation-main.-show .splitting.-aos-active .char {
-            opacity: 0;
-            -webkit-animation: splitting-in 1.2s cubic-bezier(.99,0,.755,.505) forwards;
-            animation: splitting-in 1.2s cubic-bezier(.99,0,.755,.505) forwards;
-            -webkit-animation-delay: calc(30ms*var(--char-index));
-            animation-delay: calc(30ms*var(--char-index))
-        }
-
-        .text-animation-main:not(.-show) {
-            pointer-events: none;
-            z-index: 1
-        }
-
-        .text-animation-main:not(.-show) .splitting.-aos-active .char {
-            opacity: 1;
-            -webkit-animation: splitting-out .8s cubic-bezier(.99,0,.755,.505) forwards;
-            animation: splitting-out .8s cubic-bezier(.99,0,.755,.505) forwards;
-            -webkit-animation-delay: calc(30ms*var(--char-index));
-            animation-delay: calc(30ms*var(--char-index))
-        }
-
-
-
-    </style>
 @stop
 
 @section('script')
-    @parent
-    <script src="{{ asset('static/js/xie.js') }}?ver={{ config('app.asset_version') }}"></script>
-    <script src="{{ asset('static/js/jquery.textAnimation.min.js') }}?ver={{ config('app.asset_version') }}"></script>
-    <script src="{{ asset('static/js/jquery.waypoints.min.js') }}?ver={{ config('app.asset_version') }}"></script>
-    <script src="{{ asset('static/js/countUp.min.js') }}?ver={{ config('app.asset_version') }}"></script>
-    <script src="{{ asset('static/a/js/jquery.parallax-scroll.js') }}?ver={{ config('app.asset_version') }}"></script>
-    <script src="{{ asset('static/js/jquery.parallax.js') }}?ver={{ config('app.asset_version') }}"></script>
-    <script src="{{ asset('static/js/jquery.marquee.min.js') }}?ver={{ config('app.asset_version') }}"></script>
+    <script defer src="{{ asset('static/js/price-animator.js') }}?ver={{ config('app.asset_version') }}"></script>
+
     <script>
-        $(window).resize(function(){
-            resizeVideo();
-        });
+        /** 用 DOM 建立 .word，避免 innerHTML 拼接 SVG 時產生異常字元／舊環境解析問題 */
+        function textAnimation(elem) {
+            if (!elem) {
+                return;
+            }
+            var wordStaggerMs = 30;
+            var charIndex = 0;
+            var frag = document.createDocumentFragment();
 
-        resizeVideo();
-        function resizeVideo(){
-
-            var video_width = 1000+parseInt($('.suit').find('.wrapper').css('marginLeft'));
-            $('.video-main').css('width',video_width);
-            var left = $('.shop-btn').offset().left
-            $('.shop-btn a').css('left',left+4);
-        }
-    </script>
-    <script>
-        var is_epilogue_waypoints = false;
-        $('.epilogue').waypoint(function(direction) {
-            if(is_epilogue_waypoints === false){
-                is_epilogue_waypoints = true;
-                $('.epilogue .text').textAnimation({
-                    speed: 600,
-                    delay: 100,
-                    left: 50,
-                    top: 50,
-                    scale: 1,
-                    rotateY: 0,
-                    rotateX: 0,
-                    translateZ: 1000,
-                    letterSpacing: '10px',
-                    easing: "cubic-bezier(0.290, 0.350, 0.460, 1.200)",
-                    backgroundColor: "transparent",
-                    isRandomScale: false,
-                    isRandomPosition: false,
-                    isRandomRotateY: false,
-                    isRandomRotateX: false,
-                    isRandomTranslateZ: false,
-                    isRandomSpeed: false,
-                    isRandomDelay: false});
-
+            function appendTextSegment(text) {
+                var t = text || '';
+                for (var j = 0; j < t.length; j++) {
+                    var span = document.createElement('span');
+                    span.className = 'word';
+                    span.style.animationDelay = charIndex * wordStaggerMs + 'ms';
+                    span.textContent = t.charAt(j);
+                    frag.appendChild(span);
+                    charIndex++;
+                }
             }
 
+            function walk(node) {
+                if (!node) {
+                    return;
+                }
+                if (node.nodeType === Node.TEXT_NODE) {
+                    appendTextSegment(node.nodeValue);
+                    return;
+                }
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    var ns = node.namespaceURI || '';
+                    var tag = node.tagName ? node.tagName.toLowerCase() : '';
+                    if (tag === 'svg' || ns.indexOf('svg') !== -1) {
+                        var wrap = document.createElement('span');
+                        wrap.className = 'word';
+                        wrap.style.animationDelay = charIndex * wordStaggerMs + 'ms';
+                        wrap.appendChild(node.cloneNode(true));
+                        frag.appendChild(wrap);
+                        charIndex++;
+                        return;
+                    }
+                    var kids = node.childNodes;
+                    for (var i = 0; i < kids.length; i++) {
+                        walk(kids[i]);
+                    }
+                }
+            }
 
-        }, {
-            offset: '70%'
-        })
+            var children = elem.childNodes;
+            for (var k = 0; k < children.length; k++) {
+                walk(children[k]);
+            }
 
-        setTimeout(function(){
+            while (elem.firstChild) {
+                elem.removeChild(elem.firstChild);
+            }
+            elem.appendChild(frag);
+        }
 
-            $('.slogan').textAnimation({
-                speed: 600,
-                delay: 100,
-                left: 50,
-                top: 50,
-                scale: 1,
-                rotateY: 0,
-                rotateX: 0,
-                translateZ: 1000,
-                letterSpacing: '10px',
-                easing: "cubic-bezier(0.290, 0.350, 0.460, 1.200)",
-                backgroundColor: "transparent",
-                isRandomScale: false,
-                isRandomPosition: false,
-                isRandomRotateY: false,
-                isRandomRotateX: false,
-                isRandomTranslateZ: false,
-                isRandomSpeed: false,
-                isRandomDelay: false});
-        },1000)
-
-
-        $('#use-num').waypoint(function(direction) {
-            let demo = new CountUp('use-num',0, 100000,0,2,{
-                useEasing: true,
-                useGrouping: true,
+        function initBannerTextAnimations() {
+            var textNodes = document.querySelectorAll(".text-effect .text-effect-p1, .text-effect .text-effect-p2, .text-effect .text-effect-p3");
+            Array.prototype.forEach.call(textNodes, function(node) {
+                textAnimation(node);
             });
-            demo.start();
+        }
 
-        }, {
-            offset: '100%'
-        })
+        var bannerTextExitMs = 800;
+        var bannerExitTimer = null;
+        var bannerTextInitialShown = false;
 
-        $('.timeline').waypoint(function(direction) {
+        function showActiveBannerText(textId) {
+            if (!textId) {
+                return;
+            }
+            var incoming = document.getElementById(textId);
+            if (!incoming) {
+                return;
+            }
 
-            $('#ts-svg').addClass('ts-svg')
+            if (bannerExitTimer) {
+                window.clearTimeout(bannerExitTimer);
+                bannerExitTimer = null;
+            }
 
-        }, {
-            offset: '50%'
-        })
-
-        $('.how').waypoint(function(direction) {
-            $('.appear-1').addClass('animate__animated animate__fadeInUp')
-            setTimeout(function(){
-                $('.appear-2').addClass('animate__animated animate__fadeInUp')
-            },500)
-            setTimeout(function(){
-                $('.appear-3').addClass('animate__animated animate__fadeInUp')
-            },1000)
-            setTimeout(function(){
-                $('.appear-4').addClass('animate__animated animate__fadeInUp')
-            },1500)
-
-
-        }, {
-            offset: '50%'
-        })
-
-    </script>
-
-
-
-
-    <script>
-        textAnimation("#text-banner-0 #banner-p1");
-        textAnimation("#text-banner-0 #banner-p2");
-        textAnimation("#text-banner-0 #banner-p3");
-
-        textAnimation("#text-banner-1 #banner-p1");
-        textAnimation("#text-banner-1 #banner-p2");
-        textAnimation("#text-banner-1 #banner-p3");
-
-        textAnimation("#text-banner-2 #banner-p1");
-        textAnimation("#text-banner-2 #banner-p2");
-        textAnimation("#text-banner-2 #banner-p3");
-
-
-
-
-    </script>
-    <script>
-
-
-        var state = 0; //0表示没有进行动画过渡，1表示在进行动画过渡
-        function rotate(dir) {
-
-            if (dir == 1 && state == 0) {
-                state = 1;
-                var origin_elem = $('.sef-activate');
-
-                var last_elem = $('.sef-activate').prev();
-
-                if(last_elem.length <= 0){
-                    last_elem = $('.sef').last();
+            var blocks = document.querySelectorAll('.text-effect');
+            var outgoing = null;
+            var i;
+            for (i = 0; i < blocks.length; i++) {
+                var b = blocks[i];
+                if (b.classList.contains('splitting') && !b.classList.contains('is-exiting') && b !== incoming) {
+                    outgoing = b;
+                    break;
                 }
+            }
 
-
-
-                origin_elem.removeClass('sef-activate');
-
-
-                last_elem.addClass('sef-activate');
-
-
-                origin_elem.css({
-                    'left':'0px',
-                });
-
-
-                var next1 = origin_elem.next()
-                if(next1.length <= 0){
-                    next1 = $('.sef').first();
-
+            for (i = 0; i < blocks.length; i++) {
+                var block = blocks[i];
+                if (block === incoming) {
+                    continue;
                 }
-                next1.css({
-                    'left': '300px',
-                });
-
-
-                var next2 = next1.next();
-                if(next2.length <= 0){
-                    next2 = $('.sef').first();
+                if (outgoing && block === outgoing) {
+                    block.classList.add('is-exiting');
+                } else {
+                    block.classList.remove('splitting', 'is-exiting');
                 }
+            }
 
+            incoming.classList.remove('is-exiting');
 
-
-                next2.css({
-                    'left': '600px',
-                });
-
-
-                var next3 = next2.next();
-                if(next3.length <= 0){
-                    next3 = $('.sef').first();
-                }
-                next3.css({
-                    'left': '900px',
-                });
-
-                state = 0;
-
-
-            } else if (dir == 2 && state == 0) {
-                state = 1;
-
-                var origin_elem = $('.sef-activate');
-
-                var next_elem = $('.sef-activate').next();
-
-                if(next_elem.length <= 0){
-                    next_elem = $('.sef').first();
-                }
-
-
-
-                origin_elem.removeClass('sef-activate');
-
-
-                next_elem.addClass('sef-activate');
-
-
-                origin_elem.css({
-                    'left':'900px',
-                });
-
-
-                var prev1 = origin_elem.prev()
-                if(prev1.length <= 0){
-                    prev1 = $('.sef').last();
-
-                }
-                prev1.css({
-                    'left': '600px',
-                });
-
-
-               var prev2 = prev1.prev();
-                if(prev2.length <= 0){
-                    prev2 = $('.sef').last();
-                }
-
-                prev2.css({
-                    'left': '300px',
-                });
-
-
-                var prev3 = prev2.prev();
-               if(prev3.length <= 0){
-                   prev3 = $('.sef').last();
-               }
-               prev3.css({
-                   'left': '0px',
-               });
-
-                state = 0;
-
-
-
+            if (outgoing) {
+                bannerExitTimer = window.setTimeout(function() {
+                    outgoing.classList.remove('splitting', 'is-exiting');
+                    if (outgoing.id === 'text-banner-0') {
+                        outgoing.classList.remove('text-effect--static');
+                    }
+                    incoming.classList.add('splitting');
+                    bannerExitTimer = null;
+                }, bannerTextExitMs);
+            } else if (
+                incoming.id === 'text-banner-0' &&
+                incoming.classList.contains('splitting') &&
+                bannerTextInitialShown
+            ) {
+                return;
+            } else {
+                incoming.classList.add('splitting');
             }
         }
 
+        /* hero 輪播與下方共用 script；須掛在 window 供計時器／輪播呼叫 */
+        window.showActiveBannerText = showActiveBannerText;
 
-        $('.question-show').click(function(){
-            var is_show = $(this).attr('data-show');
-            var height = $(this).find('.q-desc').height()+10+$(this).find('.q-title').height()
-            if(!is_show){
-                $(this).css('height',height);
-                $(this).attr('data-show',1);
-                $(this).find('.q-icon').html('&#xeca2;');
-            }else{
-                $(this).css('height',$(this).find('.q-title').height());
-                $(this).removeAttr('data-show');
-                $(this).find('.q-icon').html('&#xe775;');
+        function bootHomeBannerText() {
+            initBannerTextAnimations();
+            requestAnimationFrame(function() {
+                showActiveBannerText('text-banner-0');
+                bannerTextInitialShown = true;
+            });
+        }
+
+        window.bootHomeBannerText = bootHomeBannerText;
+
+        /** 首屏背景輪播（圖片淡入淡出，與文案 data-bind-text 同步） */
+        function initHeroVideoCarousel() {
+            var autoplayDelayMs = 8000;
+            var transitionMs = 1000;
+            var currentIndex = 0;
+            var autoTimer = null;
+            var isTransitioning = false;
+            var suspended = false;
+
+            var carousel = document.getElementById('hero-video-carousel');
+            if (!carousel) {
+                return;
             }
 
-        });
+            var slides = Array.prototype.slice.call(carousel.querySelectorAll('.hero-slide'));
+            var textBlocks = document.querySelectorAll('.text-effect-wrap .text-effect');
+            if (!slides.length) {
+                return;
+            }
 
-    </script>
+            function syncBannerSlideAria(activeIndex) {
+                Array.prototype.forEach.call(slides, function(slide, idx) {
+                    slide.setAttribute('aria-hidden', idx === activeIndex ? 'false' : 'true');
+                });
+                Array.prototype.forEach.call(textBlocks, function(block, idx) {
+                    block.setAttribute('aria-hidden', idx === activeIndex ? 'false' : 'true');
+                });
+            }
 
-    <script>
-        var interleaveOffset = 0.5;
-        var bannerImageScale=1.1;
-        var swiperOptions = {
-            allowTouchMove: true,
-            autoplay: {
-                delay: 6000,
-                disableOnInteraction: false
-            },
-            grabCursor: true,
-            watchSlidesProgress: true,
-            mousewheelControl: true,
-            speed: 1000,
-            loop: true,
-            pagination: {
-                el: '.progress',
+            function pauseHeroVideoCarousel() {
+                if (suspended) {
+                    return;
+                }
+                suspended = true;
+                window.clearTimeout(autoTimer);
+                autoTimer = null;
+            }
 
-                renderBullet: function (index, className) {
-                    return '<div class="bar ' + className + '"></div>';
-                },
-            },
-            on: {
-                init:function(){
+            function resumeHeroVideoCarousel() {
+                if (!suspended) {
+                    return;
+                }
+                suspended = false;
+                scheduleNext();
+            }
 
-                },
-                slideChange: function(){
+            window.pauseHeroVideoCarousel = pauseHeroVideoCarousel;
+            window.resumeHeroVideoCarousel = resumeHeroVideoCarousel;
 
-                    var eq = this.activeIndex;
-                    var elem = $(this.slides[eq]).find(".slide-inner").attr('data-bind-text');
-                    $(this.slides[eq]).find(".slide-inner video")[0].play()
-                    $('#'+elem).find('.text-animation-main').addClass('-show');
-                    $('#'+elem).siblings().find('.text-animation-main').removeClass('-show');
-                },
-                progress: function() {
-                    var swiper = this;
-                    for (var i = 0; i < swiper.slides.length; i++) {
-                        var slideProgress = swiper.slides[i].progress;
-                        var innerOffset = swiper.width * interleaveOffset;
-                        var innerTranslate = slideProgress * innerOffset;
-
-                        var innerScaleOffset = Math.abs(1 - bannerImageScale);
-                        var innerScale = Math.abs(slideProgress * innerScaleOffset) + 1;
-                        //swiper.slides[i].querySelector(".slide-inner").style.transform = "translate3d(".concat(innerTranslate, "px, 0, 0) scale(").concat(innerScale, ")");
-                        swiper.slides[i].querySelector(".slide-inner").style.transform =
-                            "translate3d(" + innerTranslate + "px, 0, 0)";
-                    }
-                },
-                touchStart: function() {
-                    var swiper = this;
-                    for (var i = 0; i < swiper.slides.length; i++) {
-                        swiper.slides[i].style.transition = "";
-                    }
-                },
-                setTransition: function(speed) {
-                    var swiper = this;
-                    for (var i = 0; i < swiper.slides.length; i++) {
-                        swiper.slides[i].style.transition = speed + "ms";
-                        swiper.slides[i].querySelector(".slide-inner").style.transition = speed + "ms";
-                    }
+            function activate(index) {
+                Array.prototype.forEach.call(slides, function(slide, idx) {
+                    slide.classList.toggle('is-active', idx === index);
+                });
+                syncBannerSlideAria(index);
+                var textId = slides[index].getAttribute('data-bind-text');
+                if (typeof window.showActiveBannerText === 'function') {
+                    window.showActiveBannerText(textId);
                 }
             }
-        };
 
-        var swiper = new Swiper("#swiper-video3", swiperOptions);
+            function goTo(nextIndex) {
+                if (suspended || isTransitioning || nextIndex === currentIndex) {
+                    return;
+                }
+                var outgoing = slides[currentIndex];
+                var incoming = slides[nextIndex];
 
+                isTransitioning = true;
+                outgoing.classList.add('is-outgoing');
+                incoming.classList.add('is-active');
+                syncBannerSlideAria(nextIndex);
+
+                if (typeof window.showActiveBannerText === 'function') {
+                    window.showActiveBannerText(incoming.getAttribute('data-bind-text'));
+                }
+
+                window.setTimeout(function() {
+                    outgoing.classList.remove('is-active', 'is-outgoing');
+                    currentIndex = nextIndex;
+                    isTransitioning = false;
+                }, transitionMs);
+            }
+
+            function scheduleNext() {
+                window.clearTimeout(autoTimer);
+                autoTimer = null;
+                if (suspended) {
+                    return;
+                }
+                autoTimer = window.setTimeout(function tick() {
+                    if (suspended) {
+                        return;
+                    }
+                    goTo((currentIndex + 1) % slides.length);
+                    if (!suspended) {
+                        autoTimer = window.setTimeout(tick, autoplayDelayMs);
+                    }
+                }, autoplayDelayMs);
+            }
+
+            activate(0);
+            scheduleNext();
+        }
+
+        function startHomeBannerTextAndHero() {
+            bootHomeBannerText();
+            initHeroVideoCarousel();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startHomeBannerTextAndHero);
+        } else {
+            startHomeBannerTextAndHero();
+        }
+
+        window.addEventListener('load', function onBannerLoadFallback() {
+            var first = document.getElementById('text-banner-0');
+            if (first && !first.classList.contains('splitting')) {
+                bootHomeBannerText();
+            }
+        });
     </script>
-
-
 
     <script>
-        $(document).scroll(function() {
-            var scroH = $(document).scrollTop();  //滚动高度
-            var viewH = $(window).height();  //可见高度
-            var contentH = $(document).height();  //内容高度
-
-            if(scroH> 10){
-                $('header').addClass('header-index')
-
+        (function() {
+            var isMobile = window.matchMedia('(max-width: 768px)').matches;
+            var coreItems = $('.index-banner .core-item');
+            if (!coreItems.length) {
+                return;
             }
 
-            if(scroH <10){  //距离顶部大于100px时
-                $('header').removeClass('header-index')
+            var currentIndex = 0;
+            var autoRotateTimer = null;
+            var clickTimer = null;
+            var isPaused = false;
+
+            function removeAllAnimate() {
+                coreItems.removeClass('core-item--animate');
             }
 
-        });
+            function addAnimate(index) {
+                removeAllAnimate();
+                coreItems.eq(index).addClass('core-item--animate');
+                currentIndex = index;
+            }
 
+            function nextBox() {
+                currentIndex = (currentIndex + 1) % coreItems.length;
+                addAnimate(currentIndex);
+            }
 
+            function startAutoRotate() {
+                if (autoRotateTimer) {
+                    clearInterval(autoRotateTimer);
+                }
+                isPaused = false;
+                autoRotateTimer = setInterval(function() {
+                    if (!isPaused) {
+                        nextBox();
+                    }
+                }, 8000);
+            }
 
-        var is_marq = false;
-        var animation_duration;
-        $('#loopWrap').marquee({
-            //duration in milliseconds of the marquee
+            function stopAutoRotate() {
+                if (autoRotateTimer) {
+                    clearInterval(autoRotateTimer);
+                    autoRotateTimer = null;
+                }
+            }
 
-            speed:60,
-            //gap in pixels between the tickers
-            gap: 0,
-            //time in milliseconds before the marquee will start animating
-            delayBeforeStart: 0,
-            //'left' or 'right'
-            direction: 'left',
-            //true or false - should the marquee be duplicated to show an effect of continues flow
-            duplicated: true,
-            pauseOnHover:true,
-            startVisible:true,
+            if (!isMobile) {
+                coreItems.each(function(index) {
+                    var $box = $(this);
+                    $box.on('mouseenter', function() {
+                        isPaused = true;
+                        stopAutoRotate();
+                        removeAllAnimate();
+                        $box.addClass('core-item--animate');
+                        currentIndex = index;
+                    });
+                    $box.on('mouseleave', function() {
+                        startAutoRotate();
+                    });
+                });
+            } else {
+                coreItems.each(function(index) {
+                    var $box = $(this);
+                    $box.on('click', function() {
+                        if (clickTimer) {
+                            clearTimeout(clickTimer);
+                        }
+                        stopAutoRotate();
+                        removeAllAnimate();
+                        $box.addClass('core-item--animate');
+                        currentIndex = index;
+                        clickTimer = setTimeout(function() {
+                            startAutoRotate();
+                        }, 8000);
+                    });
+                });
+            }
 
-        });
+            $(document).ready(function() {
+                addAnimate(0);
+                setTimeout(function() {
+                    startAutoRotate();
+                }, 3000);
+            });
+        })();
+    </script>
+    <script>
+        (function initLunboSlider() {
+            var root = document.querySelector('.lunbo .reviews-body');
+            if (!root) return;
+            var track = root.querySelector('.evaluate');
+            if (!track) return;
+            var prev = root.querySelector('[data-carousel-prev]');
+            var next = root.querySelector('[data-carousel-next]');
+            if (!prev || !next) return;
 
+            var slides = Array.prototype.slice.call(track.querySelectorAll('.sef'));
+            var total = slides.length;
+            if (!total) return;
 
-        $(".epilogue-img").parallax({
-            speed:20,
-            delay: 1000,
-            deviation:300,
-        });
+            var current = 0;
+            var isAnimating = false;
 
+            function isMobile() {
+                return window.innerWidth <= 1024;
+            }
+
+            function setFocusByCurrent() {
+                slides.forEach(function(slide, index) {
+                    slide.classList.toggle('focus', index === current);
+                });
+            }
+
+            function getCardWidth() {
+                if (isMobile()) return Math.min(500, root.clientWidth - 80);
+                return 500;
+            }
+
+            function getGap() {
+                return isMobile() ? 10 : 30;
+            }
+
+            function applyLayout() {
+                var cardWidth = getCardWidth();
+                var gap = getGap();
+                var step = cardWidth + gap;
+                var startOffset = isMobile() ? (root.clientWidth - cardWidth) / 2 : gap;
+
+                track.style.gap = gap + 'px';
+                slides.forEach(function(slide) {
+                    slide.style.flexBasis = cardWidth + 'px';
+                    slide.style.width = cardWidth + 'px';
+                    slide.style.maxWidth = cardWidth + 'px';
+                    slide.style.position = '';
+                    slide.style.left = '';
+                    slide.style.top = '';
+                    slide.style.opacity = '';
+                    slide.style.filter = '';
+                    slide.style.zIndex = '';
+                    slide.style.transform = '';
+                });
+
+                track.style.transform = 'translate3d(' + (startOffset - current * step) + 'px,0,0)';
+                setFocusByCurrent();
+            }
+
+            function move(dir) {
+                if (isAnimating) return;
+                var nextIndex = current + dir;
+                if (nextIndex < 0 || nextIndex > total - 1) return;
+                isAnimating = true;
+                current = nextIndex;
+                applyLayout();
+                window.setTimeout(function() {
+                    isAnimating = false;
+                }, 460);
+            }
+
+            prev.addEventListener('click', function() { move(-1); });
+            next.addEventListener('click', function() { move(1); });
+            window.addEventListener('resize', function() { applyLayout(); });
+
+            setFocusByCurrent();
+            applyLayout();
+        })();
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var videos = document.querySelectorAll('.js-lazy-video');
+            if (!videos.length) {
+                return;
+            }
+
+            function loadAndPlay(video) {
+                if (!video.dataset.src) {
+                    return;
+                }
+
+                if (video.dataset.loaded !== '1') {
+                    video.src = video.dataset.src;
+                    video.load();
+                    video.dataset.loaded = '1';
+                }
+
+                if (video.paused) {
+                    video.play().catch(function() {});
+                }
+            }
+
+            if (!('IntersectionObserver' in window)) {
+                Array.prototype.forEach.call(videos, loadAndPlay);
+                return;
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    var video = entry.target;
+                    if (entry.isIntersecting) {
+                        loadAndPlay(video);
+                    } else if (!video.paused) {
+                        video.pause();
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '200px 0px',
+                threshold: 0.15
+            });
+
+            Array.prototype.forEach.call(videos, function(video) {
+                observer.observe(video);
+            });
+        });
+    </script>
+
+    <script>
+        (function() {
+            var observeItems = document.querySelectorAll('.mon');
+            if (!observeItems.length) {
+                return;
+            }
+
+            var processed = new WeakSet();
+
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+                    var el = entry.target;
+                    if (processed.has(el)) {
+                        return;
+                    }
+
+                    el.classList.add('now');
+                    processed.add(el);
+                });
+            }, {
+                root: null,
+                rootMargin: '-20% 0px',
+                threshold: 0.5
+            });
+
+            Array.prototype.forEach.call(observeItems, function(el) {
+                observer.observe(el);
+            });
+        })();
+    </script>
+
+<script>
+(function() {
+    var weightLine = document.querySelector('.weight-line');
+
+    if (!weightLine) {
+        return;
+    }
+
+    var lineDraw = weightLine.querySelector('#weightLineDraw');
+    var dotMove = weightLine.querySelector('#weightDotMove');
+    var fillFade = weightLine.querySelector('#weightFillFade');
+
+    var pulseAnimations = weightLine.querySelectorAll('.weight-line-pulse animate');
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                lineDraw.beginElement();
+                dotMove.beginElement();
+                fillFade.beginElement();
+
+                Array.prototype.forEach.call(pulseAnimations, function(animation) {
+                    animation.beginElement();
+                });
+
+                observer.unobserve(weightLine);
+            }
+        });
+    }, {
+        threshold: 0.35
+    });
+
+    observer.observe(weightLine);
+})();
+</script>
 @stop
 
 
 @section('content')
+<main class="page-index">
+    <section class="index-banner" data-track-section-view data-track-section="home.hero" data-track-section-label="首屏 Banner">
 
-    <section class="index-banner" data-track-section="hero" data-track-section-view data-track-section-label="首屏Banner">
-        <div class="logo-cont">
-            <a href="{{ url('/') }}">
-                <div class="logo-wrap">
-                    <div class="place">
-                        <div class="compose">
-                            <img class="fra-1" src="{{ asset('static/img/lg/fraw-1.png') }}" alt="logo" decoding="async">
-                            <img class="fra-2" src="{{ asset('static/img/lg/fraw-2.png') }}" alt="logo" decoding="async">
-                            <img class="fra-3"  src="{{ asset('static/img/lg/fraw-3.png') }}" alt="logo" decoding="async">
-                        </div>
-                        <div class="intact">
-                            <img class="xenical-logo" src="{{ asset('static/img/lg/xenical-2.png') }}" alt="xenical" decoding="async">
-                            <p class="text white">全球領先健康減肥藥</p>
-                        </div>
-
-                    </div>
-                </div>
-            </a>
+        <h1><span class="hbrand">Orlistat</span>羅氏鮮減肥藥<span>安全有效阻斷脂肪吸收</span></h1>
+        <ul class="text-effect-wrap" role="list" aria-label="羅氏鮮產品特點說明">
+            <li class="text-effect text-effect--static" id="text-banner-0" aria-hidden="false">
+                <strong class="text-effect-p1">安全減肥</strong>
+                <p class="text-effect-p2"><svg class="tickicon" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#icon-tickicon"></use></svg>上市近30年，全球累計數億人次使用數據</p>
+                <p class="text-effect-p3"><svg class="tickicon" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#icon-tickicon"></use></svg>歐盟EMA、美國FDA等多國權威認證對人體安全</p>
+            </li>
+            <li class="text-effect" id="text-banner-1" aria-hidden="true">
+                <strong class="text-effect-p1">有效減肥</strong>
+                <p class="text-effect-p2"><svg class="tickicon" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#icon-tickicon"></use></svg>臨床醫師首選合法減肥輔助用藥</p>
+                <p class="text-effect-p3"><svg class="tickicon" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#icon-tickicon"></use></svg>有效阻斷約30%的脂肪吸收</p>
+            </li>
+            <li class="text-effect" id="text-banner-2" aria-hidden="true">
+                <strong class="text-effect-p1">健康減肥</strong>
+                <p class="text-effect-p2"><svg class="tickicon" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#icon-tickicon"></use></svg>不脫水，不口渴，不影響食慾</p>
+                <p class="text-effect-p3"><svg class="tickicon" viewBox="0 0 1024 1024" aria-hidden="true"><use href="#icon-tickicon"></use></svg>無須斷食動刀，健康排出油脂</p>
+            </li>
+        </ul>
+        <a href="/product" class="btn-ef1" data-observer="首頁-立即訂購" data-track-section="home.hero" data-track-name="home.hero.order_btn">立即訂購<svg class="btn-icon buy-icon" aria-hidden="true"><use href="#icon-buyicon"></use></svg></a>
+        <div class="hero-carousel" id="hero-video-carousel" role="region" aria-roledescription="carousel" aria-label="羅氏鮮產品特點輪播">
+            <img
+                class="hero-slide is-active"
+                src="{{ asset('static/video/poster1.webp') }}"
+                width="1920"
+                height="1080"
+                alt="羅氏鮮安全減肥"
+                data-bind-text="text-banner-0"
+                aria-hidden="false"
+                decoding="async"
+                fetchpriority="high"
+            >
+            <img
+                class="hero-slide"
+                src="{{ asset('static/video/poster2.webp') }}"
+                width="1920"
+                height="1080"
+                alt="羅氏鮮有效減肥"
+                data-bind-text="text-banner-1"
+                aria-hidden="true"
+                decoding="async"
+            >
+            <img
+                class="hero-slide"
+                src="{{ asset('static/video/poster3.webp') }}"
+                width="1920"
+                height="1080"
+                alt="羅氏鮮健康減肥"
+                data-bind-text="text-banner-2"
+                aria-hidden="true"
+                decoding="async"
+            >
         </div>
-            <div class="video-main">
-                <div class="video-wrap">
-                    <div class="swiper-container" id="swiper-video3">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="slide-inner" data-bind-text="text-banner-0">
-                                    <video id="video1" loop style="object-fit:cover"  muted="" width="100%" height="100%" playsinline="" preload="none" poster="/static/video/poster1.webp">
-                                        <source src="{{ asset('static/video/1.mp4') }}" type="video/mp4">
-                                    </video>
-
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="slide-inner" data-bind-text="text-banner-1">
-                                    <video style="object-fit:cover" loop muted="" width="100%" height="100%" playsinline="" preload="none" poster="/static/video/poster2.webp">
-                                        <source src="{{ asset('static/video/2.mp4') }}" type="video/mp4">
-                                    </video>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="slide-inner" data-bind-text="text-banner-2">
-                                    <video style="object-fit:cover" loop  muted="" width="100%" height="100%" playsinline="" preload="none" poster="/static/video/poster3.webp">
-                                        <source src="{{ asset('static/video/3.mp4') }}" type="video/mp4">
-                                    </video>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="shade-mask"></div>
-
-                    <div class="pill1"></div>
-                    <div class="pill2"></div>
-
-                    <div class="progress"></div>
-                    @if(!is_googlebot())
-                    <div class="text-effect" id="text-banner-0">
-                        <p class="p1" id="banner-p1">{{ app('cache.config')->get('home_banner_0_title', '安全減肥') }}</p>
-                        <p class="p2" id="banner-p2">{{ app('cache.config')->get('home_banner_0_title_en', 'Safe') }}&nbsp;</p>
-                        <p class="p3" id="banner-p3">{{ app('cache.config')->get('home_banner_0_desc', '歐盟EMA、美國FDA等多國權威認證對人體安全') }}</p>
-                    </div>
-
-                    <div class="text-effect" id="text-banner-1" >
-                        <p class="p1" id="banner-p1">{{ app('cache.config')->get('home_banner_1_title', '有效減肥') }}</p>
-                        <p class="p2" id="banner-p2">{{ app('cache.config')->get('home_banner_1_title_en', 'Effective') }}&nbsp;</p>
-                        <p class="p3" id="banner-p3">{{ app('cache.config')->get('home_banner_1_desc', '台灣上市22年，醫師首選唯一合法減肥藥') }}</p>
-                    </div>
-
-                    <div class="text-effect" id="text-banner-2" >
-                        <p class="p1" id="banner-p1">{{ app('cache.config')->get('home_banner_2_title', '健康減肥') }}</p>
-                        <p class="p2" id="banner-p2">{{ app('cache.config')->get('home_banner_2_title_en', 'Healthy') }}&nbsp;</p>
-                        <p class="p3" id="banner-p3">{{ app('cache.config')->get('home_banner_2_desc', '無須斷食動刀，健康排出油脂') }}</p>
-                    </div>
-                    @endif
-
-                </div>
-
-            </div>
-        <div class="vh">
-            <div class="wrapper">
-                <div class="leg">
-                    <div class="shop-btn"><a class="btn-ef1" href="{{ url('product') }}" data-track-section="home.hero" data-track-name="home.hero.order_btn" data-observer="頂部-線上訂購">線上訂購</a></div>
-                    <div class="slogan"> 妳,滿意妳現在的身材嗎？</div>
-                    <div class="shuidi"></div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="about-section" data-track-section="about" data-track-section-view data-track-section-label="全球销量">
-        <div class="wrapper about">
-            <div class="row ab-main wow animate__animated animate__fadeInUp"  >
-                <h1 class="ab-title">{!! app('cache.config')->get('home_about_title') !!}</h1>
-                <p class="sub">WHAT IS XENICAL</p>
-                <div class="text">
-                    {!! app('cache.config')->get('home_about') !!}
-                </div>
-            </div>
-            <div class="row xl-main wow animate__animated animate__fadeInUp">
-                <h2 class="xl-title">銷量突破</h2>
-                <div class="text" >
-                    <span class="num" id="use-num">100,000</span><span class="em" >萬億顆<br>以上</span>
-                </div>
+        @include('web.widgets.core-sec', ['variant' => 'hero'])
+        <div class="slogan-box">
+            {{-- 勿在 .slogan 的 flex 子項之間留空白／換行，否則會產生匿名 flex 文字節點，擠高區塊並遮到 hero 影片 --}}
+            <p class="slogan">@foreach(preg_split('//u', '妳值得擁有更好的身材', -1, PREG_SPLIT_NO_EMPTY) as $sloganChar)<span class="slogan__char">{{ $sloganChar }}</span>@endforeach</p>
+            <div class="scroll-down">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </section>
 
-    <section class="suit" data-track-section="suit" data-track-section-view data-track-section-label="适用对象">
-        <div class="wrapper">
-            <div class="suit-head wow animate__animated animate__fadeInUp" >
-                <h2 class="title">適用族群</h2>
-            </div>
-            <div class="suit-content wow animate__animated animate__fadeInUp">
-                @php
-                    $people_key=0;
-                @endphp
-                @foreach($for_people as $key=>$item)
-                <div class="item" data-parallax='{"y": {{ $people_key%2==0?'-':'' }}100}'>
-                    <div class="box">
-                        <img src="{{ asset('uploads/'.($item->img ?? '')) }}" alt="{{ $item->text }}" loading="lazy" decoding="async">
-                    </div>
-                    <p class="text">{{ $item->text }}</p>
-                </div>
-                    @php
-                        $people_key++;
-                    @endphp
-                @endforeach
-            </div>
+    <section class="suit" data-track-section-view data-track-section="home.suit" data-track-section-label="減肥困擾">
+        <div class="content-wrap">
+            <p class="en-title">Oops...</p>
+            <h2 class="sec-title">這些減肥困擾<span class="mon">大多數人正在經歷</span></h2>
+            <p class="sec-content">當身體脂肪比偏高。多數人會開始嘗試各種減肥方法，例如節食、運動、代餐、減肥藥甚至抽脂，但實際上，很多減肥失敗的原因，並不是不夠努力，而是方法用錯了。</p>
+            <p class="sec-content">以下這些常見的減肥卡關狀況，如果你中了其中一項，代表你可能需要重新選擇更適合的減肥方式。</p>
         </div>
-    </section>
-
-    <section class="how" data-track-section="how" data-track-section-view data-track-section-label="作用原理">
-        <div class="wrapper">
-            <div class="modal wow animate__animated animate__fadeInUp">
-                <h2 class="title">羅氏鮮作用機轉</h2>
-                <p class="sub">HOW TO WORK</p>
-            </div>
-            <div class="how-body">
-                <div class="how-resolve">
-                    <div class="picker appear-1">
-                        <span class="min-zf left-more" style="left: 182px;top: 122px;"></span>
-                        <span class="min-zf left-more" style="left: 195px;top: 186px;"></span>
-                        <span class="min-zf right-more" style="right: 134px;top: 93px;"></span>
-                        <span class="min-zf right-more" style="right: 124px;top: 138px;"></span>
-
-                    </div>
-                    <div class="introduce appear-2">
-                        {!! app('cache.config')->get('how_to_work_1') !!}
-                    </div>
+        <ul class="suit-list">
+            <li class="suit-item mon">
+                <div class="suit-item-img">
+                    <img loading="lazy" decoding="async" src="/static/img/suit1.webp" alt="已經吃很少 體重卻完全不動">
                 </div>
-
-                <div class="how-resolve restrain ">
-                    <div class="picker appear-3">
-                        <span class="max-zf bottom-more" style="bottom: 108px;left: 236px"></span>
-                    </div>
-                    <div class="introduce appear-4">
-                        {!! app('cache.config')->get('how_to_work_2') !!}
-                    </div>
+                <h3 class="suit-item-title">已經吃很少<span>體重卻完全不動</span></h3>
+                <p class="suit-item-content">少吃、節食都有做，熱量也在控制，但體重就是卡住不下降，一放鬆，反而更快反彈。</p>
+            </li>
+            <li class="suit-item mon">
+                <div class="suit-item-img">
+                    <img loading="lazy" decoding="async" src="/static/img/suit2.webp" alt="每天外食 油脂根本控制不了">
                 </div>
-
-            </div>
-        </div>
-        <div class="decorate de-1"></div>
-        <div class="decorate de-2"></div>
-    </section>
-
-    <section class="product" data-track-section="product" data-track-section-view data-track-section-label="商品方案">
-        <div class="wrapper">
-            <div class="modal wow animate__animated animate__fadeInUp">
-                <h2 class="title">如何訂購羅氏鮮</h2>
-                <p class="sub">HOW TO BUY</p>
-            </div>
-            <div class="product-body">
-                <div class="shop">
-                    <div class="introduce order wow animate__animated animate__fadeInUp">
-                        <p class="title">線上通路</p>
-                        <p class="desc">
-                            台灣羅氏鮮官方線上訂購<br>
-                            <span style="background-color: #ffebd9">無須醫師處方箋</span>，歐洲原裝進口<br>
-                            訂購組合懶人包可享受超值優惠
-                        </p>
-                        <img class="shop-img" src="{{ asset('static/img/shop2.webp') }}" alt="羅氏鮮" loading="lazy" decoding="async">
-                    </div>
-                    <div class="goods wow animate__animated animate__fadeInUp">
-                        @foreach($products as $key=>$item)
-
-                            <div class="item">
-                                <p class="title">羅氏鮮{{ $item->sub_name }}</p>
-                                <p class=green-mask>
-                                    <span class="price">NT${{ number_format(round($item->price)) }}</span>
-                                    <span class="box">
-                                        @if($item->market_price-$item->price > 0)
-                                            優惠NT${{ number_format(round($item->market_price-$item->price)) }}
-                                        @else
-                                            官方標準售價
-                                        @endif</span>
-                                </p>
-                                <a class="shop-btn btn-ef2" href="{{ url('checkout/'.$item->id) }}"  data-observer="立即訂購-{{ $item->name }}">立即訂購</a>
-                            </div>
-                        @endforeach
-                    </div>
-
+                <h3 class="suit-item-title">每天外食<span>油脂根本控制不了</span></h3>
+                <p class="suit-item-content">便當、外送、聚餐應酬，幾乎每餐都偏油膩。明知道飲食油膩，卻不可能每餐都能控制。</p>
+            </li>
+            <li class="suit-item mon">
+                <div class="suit-item-img">
+                    <img loading="lazy" decoding="async" src="/static/img/suit3.webp" alt="有在運動 效果慢到撐不下去">
                 </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section class="lunbo" data-track-section="lunbo" data-track-section-view data-track-section-label="用户见证">
-        <div class="wrapper" style="">
-            <div class="modal wow animate__animated animate__fadeInUp">
-                <h2 class="title">健康減肥瘦身<br>看看他們怎麼說</h2>
-            </div>
-            @if($trade_show)
-            <div class="lunbo-body wow animate__animated animate__fadeInUp">
-                <div class="evaluate">
-                    @foreach(array_values($trade_show) as $key=>$item)
-                        @if($key>5)
-                            @break
-                        @endif
-
-                        <div class="sef {{ $key==0?"sef-activate":"" }}"><img src="{{ asset_upload($item['img']) }}" alt="{{ isset($item['text'])?$item['text']:'' }}" loading="lazy" decoding="async"></div>
-
-                    @endforeach
+                <h3 class="suit-item-title">有在運動<span>效果慢到撐不下去</span></h3>
+                <p class="suit-item-content">跑步、重訓都有做，撐了好幾個月，但體脂卻只降一點點，慢到開始懷疑自己根本瘦不下來。</p>
+            </li>
+            <li class="suit-item mon">
+                <div class="suit-item-img">
+                    <img loading="lazy" decoding="async" src="/static/img/suit4.webp" alt="手術抽脂怕傷身 也不敢亂吃減肥藥">
                 </div>
-                <div class="switch prev-btn"><a href="javascript:;" onclick="rotate(1)"><i class="iconfont">&#xe779;</i></a></div>
-                <div class="switch next-btn"><a href="javascript:;" onclick="rotate(2)"><i class="iconfont">&#xe775;</i></a></div>
-            </div>
-            @endif
-        </div>
+                <h3 class="suit-item-title">手術抽脂怕傷身<span>也不敢亂吃減肥藥</span></h3>
+                <p class="suit-item-content">吃藥怕等副作用，抽脂手術怕後遺症影響身體，想改善體態，卻又不想拿健康去冒險。</p>
+            </li>
+            <li class="suit-item mon">
+                <div class="suit-item-img">
+                    <img loading="lazy" decoding="async" src="/static/img/suit5.webp" alt="瘦下來沒多久 體重又全部胖回來">
+                </div>
+                <h3 class="suit-item-title">瘦下來沒多久<span>體重又全部胖回來</span></h3>
+                <p class="suit-item-content">節食、運動好不容易才瘦一點，只要恢復正常生活，體重很快又反彈回去，反反覆覆很累。</p>
+            </li>
+            <li class="suit-item mon">
+                <div class="suit-item-img">
+                    <img loading="lazy" decoding="async" src="/static/img/suit6.webp" alt="產後加年齡增長 體重也越來越難控制">
+                </div>
+                <h3 class="suit-item-title">產後加年齡增長<span>體重也越來越難控制</span></h3>
+                <p class="suit-item-content">以前少吃幾天就能瘦下來，現在明明吃得差不多，體重卻一直往上升，代謝明顯不像以前。</p>
+            </li>
+        </ul>
     </section>
+    <section class="about" data-track-section-view data-track-section="home.about" data-track-section-label="關於羅氏鮮">
+        <p class="en-title">About XENICAL</p>
+        <h2 class="sec-title">XENICAL® 羅氏鮮/羅鮮子<span class="mon">隨餐一顆 輕鬆減肥</span></h2>
+        <div class="sec-content-wrap">
+            @php
+                $homeAboutHtml = app('cache.config')->get('home_about') ?? '';
+                $homeAboutHtml = preg_replace_callback('/<p\b([^>]*)>/i', function ($matches) {
+                    $attrs = $matches[1] ?? '';
+                    if (preg_match('/\bclass\s*=\s*([\'"])(.*?)\1/i', $attrs, $classMatch)) {
+                        $classes = preg_split('/\s+/', trim($classMatch[2])) ?: [];
+                        if (!in_array('sec-content', $classes, true)) {
+                            $classes[] = 'sec-content';
+                        }
+                        $newClass = 'class=' . $classMatch[1] . implode(' ', $classes) . $classMatch[1];
+                        $newAttrs = preg_replace('/\bclass\s*=\s*([\'"])(.*?)\1/i', $newClass, $attrs, 1);
+                        return '<p' . $newAttrs . '>';
+                    }
+                    return '<p class="sec-content"' . $attrs . '>';
+                }, $homeAboutHtml);
+            @endphp
+            {!! $homeAboutHtml !!}
+            <ul class="about-list">
+                <li class="about-item"><svg class="righticon" viewBox="0 0 1024 1024"><use href="#icon-righticon"></use></svg>不需要極端節食，羅氏鮮能讓你在正常飲食下也能減少油脂熱量攝入。這不是快速減肥，而是穩定的控制熱量，打破復胖的惡性循環。</li>
+                <li class="about-item"><svg class="righticon" viewBox="0 0 1024 1024"><use href="#icon-righticon"></use></svg>羅氏鮮非常適合高油脂飲食生活，在進食中或餐後一小時內服用，直接讓腸胃少吸收進口的油脂。</li>
+                <li class="about-item"><svg class="righticon" viewBox="0 0 1024 1024"><use href="#icon-righticon"></use></svg>當減脂過慢，改變吸收熱量是最高效的策略。透過減少脂肪吸收，能幫你從物理層面拉開熱量赤字，效果自然事半功倍。</li>
+                <li class="about-item"><svg class="righticon" viewBox="0 0 1024 1024"><use href="#icon-righticon"></use></svg>口服羅氏鮮不進入血液循環，僅在腸道發揮作用，不影響中樞神經，不腹瀉脫水、不口乾口渴，是目前安全性相對極高、且受到全球廣泛臨床驗證的非侵入式減肥方案。</li>
+
+            </ul>
+            <p class="user-count"><span><span class="user-count-number" data-count="{{ $userCount }}">{{ number_format($userCount) }}</span>人</span><span class="user-count-text">選擇羅氏鮮成功達到瘦身目標</span></p>
+            
+            <a class="btn-ef2" href="/about" data-observer="查看羅氏鮮詳細介紹" data-track-section="home.about" data-track-name="home.about.more">查看羅氏鮮詳細介紹<svg class="arrowicon"><use href="#icon-arrowicon"/></svg></a>
+            <div class="about-banner">
+                <img class="about-banner-img" src="/static/img/about.webp" loading="lazy" decoding="async" width="1024" height="1024" alt="羅氏鮮減肥效果">
+                <svg class="weight-line" viewBox="0 0 360 220" preserveAspectRatio="none">
+                    <defs>
+
+                        <linearGradient id="weight-gradient" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" class="weight-stop-start"/>
+                            <stop offset="100%" class="weight-stop-end"/>
+                        </linearGradient>
 
 
-    <section class="tdee" data-track-section="tdee" data-track-section-view data-track-section-label="计算器入口">
-        <div class="wrapper" style="">
-            <div class="modal wow animate__animated animate__fadeInUp">
-                <h2 class="title">你瞭解你的身體嗎？</h2>
+                        <linearGradient id="weight-fill-gradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" class="weight-fill-start"/>
+                            <stop offset="100%" class="weight-fill-end"/>
+                        </linearGradient>
 
-            </div>
-            <div class="tdee-about  wow animate__animated animate__fadeInUp">
-                {!! str_replace(PHP_EOL,'<br>',app('cache.config')->get('slim_about')) !!}
-            </div>
-            <div class="tdee-body ">
-                <a class="tdee-btn" href="{{ url('compute') }}" data-track-section="tdee" data-track-name="home.tdee.btn" data-observer="測試你的數據按鈕"><span class="text">測試你的數據</span></a>
-            </div>
-        </div>
+                        <linearGradient id="weight-fade-gradient" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="black" stop-opacity="0"/>
+                            <stop offset="10%" stop-color="white"/>
+                            <stop offset="90%" stop-color="white"/>
+                            <stop offset="100%" stop-color="black" stop-opacity="0"/>
+                        </linearGradient>
 
-    </section>
+                        <mask id="weight-fade-mask">
+                            <rect
+                                width="360"
+                                height="220"
+                                fill="url(#weight-fade-gradient)"
+                            />
+                        </mask>
 
-    <section class="timeline" data-track-section="timeline" data-track-section-view data-track-section-label="时间轴">
-        <div class="wrapper" style="">
-            <div class="modal wow animate__animated animate__fadeInUp" id="ts-svg">
-                <h2 class="title">我們致力於解決你的困擾</h2>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 170" preserveAspectRatio="none">
-                    <path d="M7.7,145.6C109,125,299.9,116.2,401,121.3c42.1,2.2,87.6,11.8,87.3,25.7">
+                        <filter id="weight-dot-glow" x="-200%" y="-200%" width="400%" height="400%">
+                            <feGaussianBlur stdDeviation="4" result="blur"/>
+                            <feMerge>
+                                <feMergeNode in="blur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+
+                    </defs>
+                    <g class="weight-grid">
+
+                        <line x1="0" y1="50" x2="360" y2="50"/>
+                        <line x1="0" y1="95" x2="360" y2="95"/>
+                        <line x1="0" y1="140" x2="360" y2="140"/>
+                        <line x1="0" y1="185" x2="360" y2="185"/>
+
+                    </g>
+                    <path
+                        class="weight-fill"
+                        mask="url(#weight-fade-mask)"
+                        d="
+                            M0,220
+                            L0,58
+
+                            Q110,60 180,88
+                            T360,165
+
+                            L360,220
+                            Z
+                        "
+                        fill="url(#weight-fill-gradient)"
+                        opacity="0"
+                    >
+                        <animate
+                            id="weightFillFade"
+                            attributeName="opacity"
+                            from="0"
+                            to="1"
+                            dur="1.6s"
+                            begin="indefinite"
+                            fill="freeze"
+                        />
                     </path>
+                    <path
+                        class="weight-inner-line"
+                        d="
+                            M0,58
+
+                            Q110,60 180,88
+                            T360,165
+                        "
+                        pathLength="1"
+                        stroke-dasharray="1"
+                        stroke-dashoffset="1"
+                    >
+                        <animate
+                            id="weightLineDraw"
+                            attributeName="stroke-dashoffset"
+                            from="1"
+                            to="0"
+                            dur="2s"
+                            begin="indefinite"
+                            fill="freeze"
+                            calcMode="spline"
+                            keyTimes="0;1"
+                            keySplines="0.4 0 0.2 1"
+                        />
+                    </path>
+                    <g class="weight-dot-group" filter="url(#weight-dot-glow)">
+
+                        <circle class="weight-line-dot" r="5"/>
+
+                        <circle class="weight-line-pulse" r="0">
+
+                            <animate
+                                attributeName="r"
+                                from="0"
+                                to="22"
+                                dur="2s"
+                                begin="indefinite"
+                            />
+
+                            <animate
+                                attributeName="opacity"
+                                from="0.7"
+                                to="0"
+                                dur="2s"
+                                begin="indefinite"
+                            />
+
+                            <animate
+                                attributeName="stroke-width"
+                                from="4"
+                                to="0"
+                                dur="2s"
+                                begin="indefinite"
+                            />
+
+                        </circle>
+
+                        <animateMotion
+                            id="weightDotMove"
+                            dur="2s"
+                            begin="indefinite"
+                            fill="freeze"
+                            path="
+                                M0,58
+
+                                Q110,60 180,88
+                                T360,165
+                            "
+                            calcMode="spline"
+                            keyTimes="0;1"
+                            keySplines="0.4 0 0.2 1"
+                        />
+
+                    </g>
                 </svg>
+               
             </div>
         </div>
-        <div class="timeline-body wow animate__animated animate__fadeInUp" id="loopWrap">
-            <div class="group">
-                @foreach($trouble as $item)
-                <div class="item">
-                    <p class="p1">{{ $item->text }}</p>
-                    <p class="p2"><span class="num">{{ $item->number }}</span><span class="unit">{{ $item->unit }}</span></p>
-                </div>
-                @endforeach
-
-            </div>
+        <div class="rice-wrap">
+        @include('web.widgets.rice-scroll')
         </div>
     </section>
+    <section class="product-sec" aria-label="訂購羅氏鮮療程組合" data-track-section-view data-track-section="home.products" data-track-section-label="首頁產品列表">
 
-    <section class="fqa" data-track-section="fqa" data-track-section-view data-track-section-label="FAQ精选">
-        <div class="wrapper" style="">
-            <div class="modal wow animate__animated animate__fadeInUp">
-                <h2 class="title">醫師問答</h2>
-                <p class="sub">Q&A</p>
-            </div>
-            <div class="fqa-body">
-                <div class="question wow animate__animated animate__fadeInUp">
-                    @foreach($faqs as $key=>$faq)
-                        @if($key>5)
-                            @break
-                        @endif
-                    <div class="item question-show">
-                        <p class="q-title">Q：{{ $faq->questions }}</p>
-                        <p class="q-desc">{!! $faq->answers !!}</p>
-                        <i class="q-icon iconfont">&#xe775;</i>
-                    </div>
+        <p class="en-title">BUY ONLINE</p>
+        <h2 class="sec-title">訂購羅氏鮮療程組合<span class="mon">實現您的瘦身目標</span></h2>
+        <p class="sec-content">台灣訂購減肥藥羅氏鮮官方線上通路，無須醫師處方箋，歐洲原裝進口，購買組合療程可享受最高51%優惠</p>
+
+        @include('web.widgets.core-sec')
+
+        <ol class="product-list">
+        @foreach($products as $goods)
+            <li class="product-card" data-product-id="{{ $goods->id }}">
+                @if($loop->iteration === 2)
+                    <p class="choose-label"><span class="hot">時下熱門</span>83%顧客選擇該組合開始減肥計劃</p>
+                @endif
+                <div class="img-wrap">
+                    <img src="{{ asset('uploads/'.$goods->img) }}" alt="{{ $goods->name }}">
+                </div>
+                <h3 class="product-title">{{ $goods->name }}<strong class="product-sub-name">{{ $goods->sub_name }}</strong></h3>
+                <ul class="tags">
+                    @foreach(explode('|',$goods->label) as $label)
+                        <li class="tag-item">
+                            <span class="tick"><svg class="tickicon" viewBox="0 0 1024 1024"><use href="#icon-tickicon"></use></svg></span>
+                            <p class="tag-text">{{ $label }}</p>
+                        </li>
                     @endforeach
+                </ul>
+                <dl class="attr">
+                    @foreach($goods->attr->skip(1) as $attr)
+                        <dt class="attr-name">{{ $attr->name }}</dt>
+                        <dd class="attr-value">{{ $attr->value }}</dd>
+                    @endforeach
+
+                </dl>
+                <div class="product-bottom">
+                    <div class="price-box" data-market-price="{{ $goods->market_price }}" data-price="{{ $goods->price }}">
+                        <div class="mk-price-box">
+                            <p class="mk-price"><span class="twd">NT$</span>{{ $goods->market_price }}</p>
+                            <p class="discount">-<span class="descount-num">{{ $goods->discount_percent }}</span>%</p>
+                        </div>
+                        <p class="price"><span class="twd">NT$</span><span class="price-number">{{ $goods->price }}</span></p>
+                    </div>
+                    <a class="btn-ef1" href="{{ url('checkout/'.$goods->id) }}" data-observer="立即訂購-{{ $goods->name }}" data-track-section="home.products" data-track-name="home.product.checkout">立即訂購<svg class="btn-icon buy-icon"><use href="#icon-buyicon"></use></svg>
+                        
+                    </a>
+                    @if($loop->iteration === 2)
+                        <span class="free-shipping">限時免運哦</span>
+                    @endif 
                 </div>
+            </li>
+        @endforeach
+        </ol>
+        <a href="/product" class="btn-ef2" data-observer="更多羅氏鮮組合" data-track-section="home.products" data-track-name="home.products.more">更多羅氏鮮瘦身療程組合<svg class="btn-icon"><use href="#icon-arrowicon"></use></svg></a>
+        @include('web.widgets.tick-scroll')
+    </section>
+    <section class="how" aria-label="羅氏鮮作用機轉" data-track-section-view data-track-section="home.how" data-track-section-label="作用機轉">
+        <p class="en-title">HOW TO WORK</p>
+        <h2 class="sec-title">羅氏鮮安全减肥機轉<span class="mon">阻斷脂肪分解吸收</span></h2>
+        <ol class="work-wrap">
+            <li class="work-item mon">
+                <video data-src="/static/video/work1.mp4" poster="{{ asset('static/video/work1-cover.webp') }}" preload="none" autoplay muted loop playsinline webkit-playsinline class="work-video js-lazy-video" title="威而鋼抑制PDE5酵素過程演示" aria-label="動畫展示威而鋼如何與PDE5酵素結合"></video>
+                <div class="work-text">
+                    <h3 class="work-title">脂肪正常分解</h3>
+                    <p class="work-desc">人體在攝取高油脂食物後，需透過「脂肪酶（Lipase）」將脂肪分解，才能被小腸吸收並轉化為熱量。一旦吸收量長期高於消耗，脂肪便會累積。</p>
+                </div>
+                <div class="down-box">
+                    <svg class="downarrow-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><use href="#icon-downarrow-icon"/></svg>
+                </div>
+            </li>
+            <li class="work-item mon">
+                <video data-src="/static/video/work2.mp4" poster="{{ asset('static/video/work2-cover.webp') }}" preload="none" autoplay muted loop playsinline webkit-playsinline class="work-video js-lazy-video"></video>
+                <div class="work-text">
+                    <h3 class="work-title">羅氏鮮抑制脂肪分解</h3>
+                    <p class="work-desc">羅氏鮮（Orlistat）能有效抑制腸道脂肪酶活性，使約30%的膳食脂肪無法被分解，直接隨糞便排出體外。脂肪在腸道階段就被「攔截」，還沒進入血液，就已經失去轉化為熱量的機會。由於其作用侷限於腸道，長期使用的安全結構相對明確</p>
+                </div>
+                <div class="down-box">
+                    <svg class="downarrow-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><use href="#icon-downarrow-icon"/></svg>
+                </div>
+            </li>
+            <li class="work-item mon">
+                <video data-src="/static/video/work3.mp4" poster="{{ asset('static/video/work3-cover.webp') }}" preload="none" autoplay muted loop playsinline webkit-playsinline class="work-video js-lazy-video"></video>
+                <div class="work-text">
+                    <h3 class="work-title">形成熱量赤字</h3>
+                    <p class="work-desc">當每日吸收的脂肪熱量被降低後，即使飲食沒有劇烈改變，整體熱量攝取仍會下降，進而形成穩定的熱量赤字（Caloric Deficit）。透過持續降低脂肪吸收效率，減少脂肪再次堆積的速度，降低因飲食波動帶來的體重反彈風險。</p>
+                </div>
+            </li>
+        </ol>
+    </section>
+    <section class="lunbo" aria-label="羅氏鮮用戶減肥見證" data-track-section-view data-track-section="home.testimonials" data-track-section-label="用戶見證">
+        <p class="en-title">REAL RESULTS</p>
+        <h2 class="sec-title">真實減肥效果<span class="mon">看看她們怎麼說</span></h2>
+            <div class="reviews-body">
+                <div class="evaluate">
+                    @forelse($successCases as $case)
+                    <article class="sef">
+                        <h3 class="sef-title">{{ $case->duration }}{{ $case->result }}</h3>
+                        <div class="compare-images">
+                            <img src="{{ asset_upload(ltrim($case->before_image, '/')) }}" loading="lazy" decoding="async" alt="{{ $case->name }} 服用羅氏鮮前">
+                            <p class="compare-label">服用羅氏鮮前</p>
+                            <img src="{{ asset_upload(ltrim($case->after_image, '/')) }}" loading="lazy" decoding="async" alt="{{ $case->name }} 服用羅氏鮮後">
+                            <p class="compare-label">服用羅氏鮮{{ $case->duration }}後</p>
+                        </div>
+                        <p class="note">{{ $case->content }}</p>
+                        <p class="identity">{{ $case->name }}<span>/</span>{{ $case->age }}<span>/</span>{{ $case->occupation }}</p>
+                        <p class="sef-footnote"><svg class="sef-icon" aria-hidden="true"><use href="#icon-sef"></use></svg>顧客留言見證</p>
+                    </article>
+                    @empty
+                    <article class="sef">
+                        <h3 class="sef-title">暫無案例</h3>
+                        <p class="note">成功案例資料載入中，敬請稍後再瀏覽。</p>
+                    </article>
+                    @endforelse
+                </div>
+                <button class="switch prev-btn" type="button" data-carousel-prev aria-label="上一張" data-observer="首頁-見證-上一張" data-track-section="home.testimonials" data-track-name="home.testimonials.prev">
+                    <svg><use href="#icon-arrowicon"/></svg>
+                </button>
+                <button class="switch next-btn" type="button" data-carousel-next aria-label="下一張" data-observer="首頁-見證-下一張" data-track-section="home.testimonials" data-track-name="home.testimonials.next">
+                    <svg><use href="#icon-arrowicon"/></svg>
+                </button>
             </div>
-        </div>
     </section>
 
-    <section class="epilogue" data-track-section="epilogue" data-track-section-view data-track-section-label="底部CTA">
-        <div class="epilogue-body">
-            <div class="image-wrap wow animate__animated animate__fadeInUp">
-                <figure class="box epilogue-img" style="background-image: {{ app('cache.config')->get('promote_image') ? 'url('.asset('uploads/'.app('cache.config')->get('promote_image')).')' : '' }}"></figure>
-            </div>
-            <div class="text" style="opacity: 0"><p class="p1" id="epilogue-p1">這個夏天</p><p class="p2" id="epilogue-p2">你準備好了嗎</p></div>
-            <a class="btn btn-ef1" href="{{ url('product') }}" data-track-section="epilogue" data-track-name="home.epilogue.order_btn" data-observer="立即訂購按鈕">立即訂購</a>
-        </div>
+    <section class="tdee" data-track-section-view data-track-section="home.bmi" data-track-section-label="BMI 計算入口">
+        <p class="en-title">BMI CALCULATOR</p>
+        <h2 class="sec-title">BMI計算<span class="mon">快速計算您的身體指數</span></h2>
+        <p class="tdee-about ">
+            {!! str_replace(PHP_EOL,'<br>',app('cache.config')->get('slim_about')) !!}
+        </p>
+        <a class="btn-ef1" href="{{ url('bmi') }}" data-observer="測試你的數據按鈕" data-track-section="home.bmi" data-track-name="home.tdee.btn">測一測你的BMI<svg class="arrowicon"><use href="#icon-arrowicon"/></svg></a>
+
     </section>
+
+    {{--<section class="faq">
+        <p class="en-title">Q&A</p>
+        <h2 class="sec-title">羅氏鮮幫助你<span class="mon">解決所有減肥困擾</span></h2>
+        @include('web.widgets.qa')
+        @include('web.widgets.tick-scroll')
+    </section>--}}
+
+
+    <section class="news" data-track-section-view data-track-section="home.news" data-track-section-label="減肥專欄">
+        <p class="en-title">Slimming Blog</p>
+        <h2 class="sec-title">閱讀專欄<span class="mon">分享更多減肥知識</span></h2>
+        <div class="news-wrap">
+            @foreach($news as $item)
+                @include('web.widgets.news-card', ['item' => $item])
+            @endforeach
+        </div>
+        <a class="btn-ef2" href="/news" data-observer="前往專欄閱讀更多" data-track-section="home.news" data-track-name="home.news.more">前往專欄閱讀更多內容<svg class="arrowicon"><use href="#icon-arrowicon"/></svg></a>
+    </section>
+</main>
+@include('web.widgets.update-box')
 @endsection

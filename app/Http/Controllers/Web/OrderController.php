@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Exceptions\MsgException;
+use App\Http\JsonResponse;
 use App\Http\Requests\OrderStoreRequest;
 use App\Models\Product;
 use App\Repositories\FaqRepository;
@@ -37,45 +38,46 @@ class OrderController extends BaseController
         $faqs = app(FaqRepository::class)->getByUri('check');
 
         if($request->isMethod('POST')){
-            $checkType = $request->input('check_type', 'contact');
+            $checkType = $request->input('check_type', 'order_id');
 
             if($checkType === 'order_id'){
-                // 订单号查询（本站特有：訂單編號查詢）
+                // 订单号查询
                 $orderNo = trim($request->input('order_id', ''));
                 if(!$orderNo){
-                    return response()->json(['code'=>400,'message'=>'請填寫訂單編號']);
+                    return JsonResponse::make()->statusCode(422)->status(false)->message('請填寫訂單編號')->send();
                 }
                 $orderNo = str_replace(' ', '', $orderNo);
                 if(!preg_match('/^\d{16}$/', $orderNo)){
-                    return response()->json(['code'=>400,'message'=>'訂單編號格式不正確']);
+                    return JsonResponse::make()->statusCode(422)->status(false)->message('訂單編號格式不正確')->send();
                 }
                 $order = $this->orderRepository->getByNo($orderNo);
             }else{
-                // 联络资讯查询（與 official 一致：電話 + 信箱 + 驗證碼）
+                // 联络资讯查询
                 $validator = Validator::make($request->all(), [
-                    'phone' => 'required',
                     'email' => 'required|email',
-                    'captcha_code'=>'required|captcha',
-                ],[        
-                    'phone.required'=>'請填寫聯絡電話',
-                    'email.required'=>'請填寫電子郵箱',
-                    'captcha_code.required'=>'請填寫驗證碼',
-                    'email.email'=>'郵箱格式錯誤',
-                    'captcha_code.captcha'=>'驗證碼驗證錯誤',
+                    'phone' => 'required',
+                ],[
+                    'email.required'=>'請填寫電子信箱',
+                    'email.email'=>'電子信箱格式錯誤',
+                    'phone.required'=>'請填寫訂購電話',
                 ]);
 
                 if ($validator->fails()) {
                     $errors = $validator->errors();
-                    return response()->json(['code'=>400,'message'=>$errors->first()]);
+                    return JsonResponse::make()->statusCode(422)->status(false)->message($errors->first())->send();
                 }
 
                 $order = $this->orderRepository->getByPhoneEmail(str_replace(' ','',$request->phone),$request->email);
             }
 
             if($order){
-                return response()->json(['code'=>200,'message'=>'訂單查詢成功','jump'=>url('check/'.$order->no.'?source=check')]);
+                return JsonResponse::make()
+                    ->message('訂單查詢成功')
+                    ->redirect(url('check/'.$order->no.'?source=check'))
+                    ->flash()
+                    ->send();
             }else{
-                return response()->json(['code'=>400,'message'=>'您所查詢的訂單不存在']);
+                return JsonResponse::make()->statusCode(400)->status(false)->message('您所查詢的訂單不存在')->send();
             }
         }
 

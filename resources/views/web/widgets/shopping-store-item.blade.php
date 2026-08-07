@@ -1,46 +1,15 @@
 @foreach($data as $key=>$v)
     <label class="store-item" for="store-{{ $v['shop_no'] }}">
-        <input class="form-radio store-radio" {{ count($data)<=1?"checked":"" }} data-noshow="{{ count($data)<=1?"1":"" }}" name="store_id" type="radio" value="{{ $v['shop_no'] }}" id="store-{{ $v['shop_no'] }}" data-name="{{ $v['shop_name'] }}" data-address="{{ $v['shop_address'] }}">
+        <input class="form-radio store-radio" {{ count($data)<=1?"checked":"" }} data-noshow="{{ count($data)<=1?"1":"" }}" name="store_id" type="radio" value="{{ $v['shop_no'] }}" id="store-{{ $v['shop_no'] }}">
         <div class="store-content">
-            
-            <svg class="sevenicon" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xml:space="preserve" width="271.95663" height="264.24695" style="fill-rule:evenodd" viewBox="0 0 272.68729 257.44435" id="svg2" version="1.1" inkscape:version="0.48.1 " sodipodi:docname="AJAX.svg"><metadata id="metadata40"><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/></cc:Work></rdf:RDF></metadata><sodipodi:namedview pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1280" inkscape:window-height="1004" id="namedview38" showgrid="false" inkscape:zoom="1.1149061" inkscape:cx="244.05554" inkscape:cy="140.10103" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" inkscape:current-layer="svg2" fit-margin-top="0" fit-margin-left="0" fit-margin-right="0" fit-margin-bottom="0"/>
-                <defs id="defs4"><inkscape:perspective sodipodi:type="inkscape:persp3d" inkscape:vp_x="0 : 150 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="300 : 150 : 1" inkscape:persp3d-origin="150 : 100 : 1" id="perspective42"/>
-                <style type="text/css" id="style6">
-
-                    .fil1 {fill:#008061;fill-rule:nonzero}
-                    .fil3 {fill:#ED1B2D;fill-rule:nonzero}
-                    .fil2 {fill:#F5821F;fill-rule:nonzero}
-                    .fil0 {fill:white;fill-rule:nonzero}
-
-                </style>
-
-                </defs>
-                <g id="g2862" transform="translate(-14.3907,-17.5756)"><polygon transform="matrix(0.89812868,0,0,0.89515596,15.772391,15.321752)" class="fil0" points="0,0 300.806,0 300.806,292.277 0,292.277 " id="polygon10" style="fill:#ffffff;fill-rule:nonzero"/><polygon class="fil1" points="14.3907,13.3111 287.078,13.3111 287.078,278.268 14.3907,278.268 " id="polygon12" style="fill:#008061;fill-rule:nonzero"/><path class="fil0" d="m 182.519,260.835 0,10.6078 -65.4031,0 0,-10.6276 -49.4907,0 c -4.83579,0 -8.77484,-5.05423 -8.77484,-11.2863 L 38.14156,40.0879 c 0,-6.23585 4.83579,-11.2942 10.803,-11.2942 l 199.991,0 c 5.92834,0 10.7641,5.05837 10.7641,11.2942 l -20.4749,209.441 c 0,6.23203 -3.93921,11.2863 -8.77484,11.2863 l -47.931,0.0198 z" id="path14" style="fill:#ffffff;fill-rule:nonzero" inkscape:connector-curvature="0"/><path class="fil2" d="m 74.5675,59.459 133.887,0 c -13.1823,4.94142 -53.313,32.1125 -63.3357,50.3806 l -70.4339,0 -0.117429,-50.3806 z" id="path16" style="fill:#f5821f;fill-rule:nonzero" inkscape:connector-curvature="0"/><path class="fil3" d="m 181.272,203.817 c -1.91105,18.2445 -1.98912,40.4624 -1.98912,63.8 l -58.0318,0 c 0,-23.3376 0.97512,-45.5555 2.8857,-63.8 l 57.1352,0 z" id="path18" style="fill:#ed1b2d;fill-rule:nonzero" inkscape:connector-curvature="0"/><polygon class="fil1" points="91.4939,177.453 91.4939,184.524 82.212,184.524 82.212,191.598 91.4939,191.598 91.4939,199.703 70.2776,199.703 70.2776,161.986 91.4939,161.986 91.4939,170.387 82.212,170.387 82.212,177.453 " id="polygon20" style="fill:#008061;fill-rule:nonzero"/><polygon class="fil1" points="140.828,177.453 140.828,184.524 131.586,184.524 131.586,191.598 140.828,191.598 140.828,199.703 119.652,199.703 119.652,161.986 140.828,161.986 140.828,170.387 131.586,170.387 131.586,177.453 " id="polygon22" style="fill:#008061;fill-rule:nonzero"/><polygon class="fil1" points="195.194,177.453 195.194,184.524 185.912,184.524 185.912,191.598 195.194,191.598 195.194,199.703 173.978,199.703 173.978,161.986 195.194,161.986 195.194,170.387 185.912,170.387 185.912,177.453 " id="polygon24" style="fill:#008061;fill-rule:nonzero"/><polygon class="fil1" points="107.406,161.986 107.406,191.598 116.687,191.598 116.687,199.703 95.4718,199.703 95.4718,161.986 " id="polygon26" style="fill:#008061;fill-rule:nonzero"/><polygon class="fil1" points="157.95,187.477 153.425,161.986 143.013,161.986 148.94,199.703 164.267,199.703 171.443,161.986 162.59,161.986 " id="polygon28" style="fill:#008061;fill-rule:nonzero"/><polygon class="fil1" points="200.225,161.986 211.692,161.986 211.692,199.699 200.225,199.699 " id="polygon30" style="fill:#008061;fill-rule:nonzero"/><path class="fil1" d="m 211.691,173.183 c 0.62443,-4.13025 6.47422,-3.02241 6.47422,-0.66331 l 0,27.183 11.5049,0 0,-31.9681 c 0,-6.77823 -9.5551,-9.50443 -17.901,-3.53721 l -0.0781,8.98564 z" id="path32" style="fill:#008061;fill-rule:nonzero" inkscape:connector-curvature="0"/><path class="fil3" d="m 186.654,156.682 c 1.16967,-14.4341 20.9425,-38.0054 40.0914,-44.1948 l 0,-55.6845 c -52.6885,23.572 -86.9308,59.2219 -94.3404,99.7387 l 54.2489,0.14053 z" id="path34" style="fill:#ed1b2d;fill-rule:nonzero" inkscape:connector-curvature="0"/></g>
-            </svg>
-
-            <div class="store-info">
-                <p class="store-name">{{ $v['shop_name'] }} 門市</p>
-                <p class="store-address">{{ str_replace($city_name.$county_name,'',$v['shop_address']) }}</p>
+            <div class="store-main">
+                <svg class="sevenicon" viewBox="0 0 272.68729 257.44435"><use href="#icon-sevenicon-1"></use></svg>
+                <div class="store-info">
+                    <p class="store-name">{{ $v['shop_name'] }} 門店</p>
+                    <p class="store-address">{{ str_replace($city_name.$county_name,'',$v['shop_address']) }}</p>
+                </div>
             </div>
+            <p class="store-tips"><svg t="1718878679911" class="tipsicon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13324" width="200" height="200"><path d="M734.2 414.2c7.5-7.5 11.6-17.4 11.6-27.9s-4.1-20.5-11.6-27.9c-7.5-7.5-17.4-11.6-27.9-11.6s-20.5 4.1-27.9 11.5L448 585.8l-85-82.9c-7.5-7.4-17.4-11.5-27.9-11.5-10.6 0-20.5 4.1-27.9 11.6-7.5 7.5-11.6 17.4-11.6 27.9 0 10.6 4.1 20.5 11.6 28L420 669.5c7.5 7.5 17.4 11.6 27.9 11.6s20.5-4.1 27.9-11.5l258.4-255.4zM303.6 186.9L271.5 137c-17.7 11.4-34.8 24.2-50.8 38.1l38.9 44.8c13.8-12 28.6-23.1 44-33zM130.4 456.5l-58.7-8.4c-3 20.8-4.5 42.1-4.5 63.3h59.3c0-18.4 1.3-36.9 3.9-54.9zM403.5 141.2l-16.7-56.9c-20.3 5.9-40.3 13.4-59.6 22.2l24.7 54c16.7-7.6 34-14.1 51.6-19.3zM220.6 258.9L175.8 220c-13.8 16-26.6 33-38.1 50.8l49.9 32.1c9.9-15.4 21-30.2 33-44zM161.2 351.2l-54-24.7C98.5 345.7 91 365.7 85.1 386l56.9 16.7c5.2-17.6 11.6-34.9 19.2-51.5zM863.1 351.1l54-24.7c-8.8-19.2-19-37.9-30.5-55.7l-49.9 32.1c9.9 15.4 18.8 31.7 26.4 48.3zM894 456.4l58.7-8.4c-3-20.9-7.5-41.8-13.4-62.1l-56.9 16.7c5 17.6 9 35.7 11.6 53.8zM512.2 125.7V66.4c-21.2 0-42.5 1.5-63.3 4.5l8.4 58.7c18-2.6 36.5-3.9 54.9-3.9zM803.6 258.8l44.8-38.9c-13.8-15.9-28.9-31-44.9-44.9l-38.9 44.8c13.9 12 27 25.1 39 39zM637.5 84.3c-20.3-5.9-41.1-10.5-62.1-13.4l-8.4 58.7c18.1 2.6 36.2 6.5 53.8 11.6l16.7-56.9zM752.7 136.9c-17.8-11.4-36.5-21.7-55.7-30.5l-24.7 54c16.6 7.6 32.8 16.5 48.2 26.4l32.2-49.9zM720.7 835.9l32.1 49.9c17.7-11.4 34.8-24.2 50.8-38.1l-38.9-44.8c-13.8 11.9-28.6 23-44 33zM803.7 763.9l44.8 38.9c13.8-16 26.6-33.1 38.1-50.8l-49.9-32.1c-9.9 15.3-21 30.1-33 44zM130.4 566.3l-58.7 8.4c3 20.9 7.5 41.8 13.4 62.1l56.9-16.7c-5.1-17.6-9-35.7-11.6-53.8zM897.8 511.4c0 18.4-1.3 36.9-3.9 54.9l58.7 8.4c3-20.8 4.5-42.1 4.5-63.3h-59.3zM863.1 671.6l54 24.7c8.8-19.2 16.3-39.3 22.2-59.5l-56.9-16.7c-5.2 17.5-11.7 34.8-19.3 51.5zM620.9 881.5l16.7 56.9c20.3-5.9 40.3-13.4 59.6-22.2l-24.7-54c-16.7 7.7-34.1 14.2-51.6 19.3zM220.7 764l-44.8 38.9c13.8 15.9 28.9 31 44.9 44.9l38.9-44.8c-13.9-12.1-27-25.2-39-39zM161.3 671.6l-54 24.7c8.8 19.2 19 38 30.5 55.7l49.9-32.1c-9.9-15.4-18.8-31.6-26.4-48.3zM386.8 938.5c20.2 5.9 41.1 10.5 62.1 13.4l8.4-58.7c-18.1-2.6-36.2-6.5-53.8-11.6l-16.7 56.9zM271.6 885.8c17.8 11.4 36.5 21.7 55.7 30.5l24.7-54c-16.6-7.6-32.8-16.5-48.2-26.4l-32.2 49.9zM512.2 897v59.3c21.2 0 42.5-1.5 63.3-4.5l-8.4-58.7c-18 2.6-36.5 3.9-54.9 3.9z" p-id="13325"></path></svg><span>預計最快後天（{{ date('n月d日',strtotime('+2 day')) }}）送達{{ $v['shop_name'] }}門店</span></p>
         </div>
     </label>
 @endforeach
-
-<script>
-    // 直接執行，確保 AJAX 加載後也能運作
-    (function(){
-        // 初始化已選中門市的 data
-        var \$checked = $('input[name="store_id"]:checked');
-        if (\$checked.length) {
-            updateStoreHidden(\$checked);
-        }
-        // 切換門市時更新 hidden input
-        $('input[name="store_id"]').on('change', function(){
-            updateStoreHidden($(this));
-        });
-        function updateStoreHidden($el) {
-            $('#store-name-input').val($el.data('name'));
-            $('#store-address-input').val($el.data('address'));
-        }
-    })();
-</script>

@@ -1,8 +1,7 @@
-@extends('web.layout')
+@extends('web::layout.layout')
 
 @section('style')
     @parent
-    <link rel="stylesheet" type="text/css" href="{{ asset('static/less/page.css') }}?ver={{ config('app.asset_version') }}"/>
     @if(isset($css) && $css)
     <style type="text/css">
         {!! $css !!}
@@ -11,41 +10,52 @@
 @stop
 
 @section('script')
-    @parent
     <script>
+        if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+            document.domain = location.hostname;
+        }
+        function getSafeFrameHeight(iframe) {
+            var frameDoc = iframe && iframe.contentWindow ? iframe.contentWindow.document : null;
+            if (!frameDoc) {
+                return 0;
+            }
+            return Math.max(
+                frameDoc.documentElement ? frameDoc.documentElement.scrollHeight : 0,
+                frameDoc.body ? frameDoc.body.scrollHeight : 0
+            );
+        }
         function setIframeHeight(iframe) {
             if (iframe) {
-                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-                if (iframeWin.document.body) {
-                    iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-                }}
-        };
-        window.onload = function () {
-            setIframeHeight(document.getElementById('external-frame'));
-        };
+                var frameHeight = getSafeFrameHeight(iframe);
+                if (frameHeight > 0) {
+                    iframe.style.height = frameHeight + 'px';
+                }
+            }
+        }
+        window.addEventListener('load', function () {
+            var iframe = document.getElementById('external-frame');
+            if (!iframe) {
+                return;
+            }
+            setIframeHeight(iframe);
+            var retryTimer = setInterval(function () {
+                setIframeHeight(iframe);
+            }, 400);
+            setTimeout(function () {
+                clearInterval(retryTimer);
+            }, 5000);
+        });
     </script>
-@stop
-@section('breadcrumb')
-    <ul class="breadcrumb">
-        <li><a href="{{ url('/') }}">首頁</a></li>
-        <li class="active">{{ $title }}</li>
-    </ul>
 @stop
 
 @section('content')
-
-    <section class="page-container" data-track-section="cms" data-track-section-view data-track-section-label="{{ $title }}">
-        <div class="page-main">
-            <h1 class="title">{{ $title }}</h1>
-            <div class="page-body" data-track-scroll-target>
-                @if(isset($html_code) && $html_code)
-                    <iframe  id="external-frame" width="100%" style="min-height: 100vh" src="{{ asset_upload('article_html/'.str_replace('.zip','',$html_code).'/index.html') }}"  frameborder="0" scrolling="no" onload="setIframeHeight(this)"></iframe>
-                @else
-                    {!! $content !!}
-                @endif
-
-            </div>
-        </div>
+<main>
+    @include('web.widgets.head-banner')
+    @include('web.widgets.breadcrumb', ['itemsHtml' => '<li class="breadcrumb__item">'.$title.'</li>'])
+    <section class="editor article-content" id="spageContent" data-track-section-view data-track-section="cms.content" data-track-section-label="頁面內容">
+        {!! $content !!}
     </section>
-
+</main>
+@include('web.widgets.update-box')
 @endsection
+

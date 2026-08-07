@@ -1,94 +1,105 @@
-@extends('web.layout')
+@extends('web::layout.layout')
 
 @section('style')
     @parent
-    <link rel="stylesheet" type="text/css" href="{{ asset('static/less/news.css') }}?ver={{ config('app.asset_version') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('static/less/pagination.css') }}?ver={{ config('app.asset_version') }}"/>
 @stop
 
 @section('script')
-    @parent
-    <script src="{{ asset('static/js/jquery.waypoints.min.js') }}?ver={{ config('app.asset_version') }}"></script>
     <script>
-        $(function(){
-            $('.cardList > li').waypoint(function(){
-                this.element.classList.add('show');
-            },{
-                offset: '70%'
+        const cards = document.querySelectorAll('.news-card');
+
+            function updateActiveCard() {
+                let viewportCenter = window.innerHeight / 2;
+                let closestCard = null;
+                let closestDistance = Infinity;
+
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const cardCenter = rect.top + rect.height / 2;
+                    const distance = Math.abs(cardCenter - viewportCenter);
+
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestCard = card;
+                    }
+                });
+
+                // 清除所有 active
+                cards.forEach(card => card.classList.remove('active'));
+
+                // 設置視窗中心最近的那張
+                if (closestCard) {
+                    closestCard.classList.add('active');
+                }
+            }
+
+            // 建議用 throttle / requestAnimationFrame 以防過度觸發
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        updateActiveCard();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
             });
-        });
-        $(window).scroll(function() {
-            bgEffect()
 
-        });
+            // 進入頁面也先跑一次
+            updateActiveCard();
 
-        function bgEffect(){
-            let top = document.scrollingElement.scrollTop; //触发滚动条，记录数值
-            let banner_height = $('.container-bg').height()-60;
-            let opacity = 1-top/banner_height;
-            $('.container-bg').css('opacity',opacity);
-            if(opacity<=0.6){
-                $('.page-title').css('color','rgba(0,0,0,'+top/banner_height+')');
-            }else{
-                $('.page-title').css('color','#fff');
-            }
-
-            if(($(window).scrollTop() + $(window).height()).toFixed(0) == $(document).height()){
-                $('.container-bg').css('opacity',0);
-            }
-
-
-        }
     </script>
 @stop
 
 
+
 @section('content')
-    @php($newsBg = app('cache.config')->get('page_news_back_img_pc'))
-    @if($newsBg)
-    <div class="container-bg" style="background-image: url('{{ asset_upload($newsBg) }}')">
-    @else
-    <div class="container-bg">
-    @endif
-        <p class="bg-text">{!! app('cache.config')->get('page_news_title') !!}</p>
-        <p class="beat"><i class="iconfont">&#xe784;</i></p>
-    </div>
-    <h1 class="page-title">瘦身專欄</h1>
-    <div class="news-wrap" data-track-section="news.list" data-track-section-view data-track-section-label="文章列表">
-        <ul class="breadcrumb">
-            <li><a href="{{ url('/') }}">首頁</a></li>
-            <li class="active">瘦身專欄</li>
-        </ul>
-        <ul class="cardList vertical">
+<main>
+    @include('web.widgets.head-banner')
 
-            @foreach($news as $item)
-                <li class="">
-                    <div class="item ">
-                        @if($item->img)
-                        <div class="Img"><a href="{{ url('news/'.$item->id) }}" data-track-section="news.list" data-track-name="news.list.item" data-observer="文章-{{ $item->title }}"><img src="{{ asset('uploads/'.$item->img) }}" alt="{{ $item->title }}" loading="lazy" decoding="async"></a></div>
-                        @endif
-                        <div class="Txt">
-                            <div class="newsInfoIdxBox">
-                                <div class="newsDateBox">
-                                    <span class="day">{{ $item->release_at->format('d') }}</span>
-                                    <span class="ym">{{ substr($item->release_at->format('Y'),-2) }} {{ $item->release_at->format('M') }}</span>
-                                </div>
-                                <div class="newsTitle">
-                                    <h3><a href="{{ url('news/'.$item->id) }}" data-track-section="news.list" data-track-name="news.list.title" data-observer="文章標題-{{ $item->title }}">{{ $item->title }}</a></h3>
-                                </div>
-                            </div>
-                            <p class="ellipsis" style="overflow-wrap: break-word;">
-                                {{ \Illuminate\Support\Str::limit($item->brief?$item->brief:strip_tags($item->content),680) }}
-                            </p>
-                        </div>
-                    </div>
-                </li>
+    @include('web.widgets.breadcrumb', ['itemsHtml' => '<li class="breadcrumb__item">'.($cate->name ?? '文章列表').'</li>'])
+
+    @if(!empty($topicsTags) && count($topicsTags))
+        <section class="topics">
+            @foreach($topicsTags as $tag)
+                <div class="topic" style="border-left: 4px solid {{ $tag['color'] }}">
+                    <h3 class="topic-title" style="color: {{ $tag['color'] }}">{{ $tag['name'] }}</h3>
+                    @if(!empty($tag['description']))
+                        <p class="topic-desc">{{ $tag['description'] }}</p>
+                    @endif
+                    <ul class="topic-articles">
+                        @foreach($tag['articles'] as $article)
+                            <li>
+                                <a href="{{ ($article->cate && $article->cate->uri)
+                                    ? route('news.show', [$article->cate->uri, $article->id])
+                                    : url('news/'.$article->id) }}">
+                                    {{ $article->title }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             @endforeach
+        </section>
+    @endif
 
-
+    <section class="news-list" data-track-section-view data-track-section="news.list" data-track-section-label="文章列表">
+        <h2 class="sec-title">文章列表</h2>
+        <ul class="news-wrap">
+            @forelse($news as $item)
+                @include('web.widgets.news-card', [
+                    'item' => $item,
+                    'rootTag' => 'li',
+                ])
+            @empty
+                <li>暫無文章</li>
+            @endforelse
         </ul>
 
-        {{ $news->links() }}
-    </div>
-
+        <div class="list-pagination">
+            {!! $news->links() !!}
+        </div>
+    </section>
+</main>
+@include('web.widgets.update-box')
 @endsection
