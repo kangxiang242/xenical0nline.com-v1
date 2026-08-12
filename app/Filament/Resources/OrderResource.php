@@ -9,7 +9,10 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class OrderResource extends Resource
 {
@@ -146,6 +149,10 @@ class OrderResource extends Resource
 
     public static function table(Table $table): Table
     {
+        // 统计每个 IP 的订单数（显示：IP / 国家 / 共x單）
+        $ip_counts = Order::select('ip', DB::raw('count(*) as ip_counts'))
+            ->groupBy('ip')->pluck('ip_counts', 'ip');
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('no')
@@ -177,6 +184,49 @@ class OrderResource extends Resource
                         '10' => 'success',
                         default => 'gray',
                     }),
+                                Tables\Columns\TextColumn::make('ip')
+                    ->label('IP')
+                    ->width(140)
+                    ->alignLeft()
+                    ->formatStateUsing(function (Order $record) use ($ip_counts) {
+                        $count = Arr::get($ip_counts, $record->ip, 0);
+                        return '<p style="width:130px;overflow:hidden;margin:0">' . e($record->ip) . '</p>'
+                            . '<p style="text-align:center;margin:0">' . e($record->ipcountry ?? '') . '</p>'
+                            . '<p style="text-align:center">共' . $count . '單</p>';
+                    })
+                    ->html()
+                    ->action(
+                        Action::make('viewAccessLog')
+                            ->label('')
+                            ->icon('heroicon-o-eye')
+                            ->modalHeading('頁面軌跡')
+                            ->modalContent(function (Order $record) {
+                                $logs = \App\Models\AccessLog::where('ip', $record->ip)
+                                    ->orderBy('created_at', 'desc')
+                                    ->take(10)
+                                    ->get();
+                                $html = '<table class="w-full border-collapse border border-gray-300 dark:border-gray-600 text-left" style="table-layout:fixed">'
+                                    . '<colgroup><col style="width:auto"><col style="width:35%"><col style="width:22%"></colgroup>'
+                                    . '<thead><tr class="bg-gray-100 dark:bg-gray-700">'
+                                    . '<th class="px-3 py-2 border border-gray-300 dark:border-gray-600 font-semibold">URL</th>'
+                                    . '<th class="px-3 py-2 border border-gray-300 dark:border-gray-600 font-semibold">來源</th>'
+                                    . '<th class="px-3 py-2 border border-gray-300 dark:border-gray-600 font-semibold whitespace-nowrap">時間</th>'
+                                    . '</tr></thead><tbody>';
+                                foreach ($logs as $i => $log) {
+                                    $bg = $i % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-900';
+                                    $html .= '<tr class="' . $bg . '">'
+                                        . '<td class="px-3 py-2 border border-gray-300 dark:border-gray-600 text-sm break-all" style="overflow-wrap:break-word;word-break:break-all">' . e($log->url) . '</td>'
+                                        . '<td class="px-3 py-2 border border-gray-300 dark:border-gray-600 text-sm break-all" style="overflow-wrap:break-word;word-break:break-all">' . e(substr($log->referer ?? '', 0, 80)) . '</td>'
+                                        . '<td class="px-3 py-2 border border-gray-300 dark:border-gray-600 text-sm whitespace-nowrap">' . e($log->created_at) . '</td>'
+                                        . '</tr>';
+                                }
+                                $html .= '</tbody></table>';
+                                return new \Illuminate\Support\HtmlString($html);
+                            })
+                            ->modalSubmitAction(false)
+                            ->modalCancelActionLabel('關閉')
+                    ),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('建立時間')
                     ->dateTime('Y-m-d H:i')

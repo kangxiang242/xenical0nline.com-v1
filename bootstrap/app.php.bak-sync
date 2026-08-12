@@ -18,15 +18,15 @@ return Application::configure(basePath: dirname(__DIR__))
             'googlebot.checked' => \App\Http\Middleware\GooglebotChecked::class,
         ]);
 
-                $middleware->web(
-            prepend: [
-                \App\Http\Middleware\AccessLogMiddleware::class,
-            ],
-            replace: [
-                \Illuminate\Cookie\Middleware\EncryptCookies::class => \App\Http\Middleware\EncryptCookies::class,
-                \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class => \App\Http\Middleware\VerifyCsrfToken::class,
-            ],
-        );
+        $middleware->web(prepend: [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\AccessLogMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

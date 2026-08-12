@@ -69,6 +69,10 @@ class MessageResource extends Resource
 
     public static function table(Table $table): Table
     {
+        // 统计每个 IP 的留言数
+        $ip_counts = \App\Models\Message::select('ip', \Illuminate\Support\Facades\DB::raw('count(*) as ip_counts'))
+            ->groupBy('ip')->pluck('ip_counts', 'ip');
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
@@ -89,6 +93,19 @@ class MessageResource extends Resource
                     ->label('內容')
                     ->limit(40)
                     ->toggleable(),
+                                Tables\Columns\TextColumn::make('ip')
+                    ->label('IP')
+                    ->width(140)
+                    ->alignLeft()
+                    ->formatStateUsing(function ($record) use ($ip_counts) {
+                        $count = \Illuminate\Support\Arr::get($ip_counts, $record->ip, 0);
+                        return '<p style="width:130px;overflow:hidden;margin:0">' . e($record->ip) . '</p>'
+                            . '<p style="text-align:center;margin:0">' . e($record->user_agent ?? '') . '</p>'
+                            . '<p style="text-align:center">共' . $count . '條</p>';
+                    })
+                    ->html()
+                    ->toggleable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('建立時間')
                     ->dateTime('Y-m-d H:i')

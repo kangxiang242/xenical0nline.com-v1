@@ -9,7 +9,7 @@ class DeviceTypeHandlers
 
     public static function isMobile($user_agent = null) {
         if(!$user_agent){
-            $user_agent  = $_SERVER['HTTP_USER_AGENT'];
+            $user_agent  = $_SERVER['HTTP_USER_AGENT'] ?? '';
         }
         $mobile_browser = Array (
             "iphone",
@@ -30,7 +30,7 @@ class DeviceTypeHandlers
 
     public static function getDevice($agent = null){
         if(!$agent){
-            $agent  = $_SERVER['HTTP_USER_AGENT'] ?? '';
+            $agent  = $_SERVER['HTTP_USER_AGENT'] ?? '' ?? '';
         }
         $agent = strtolower($agent);
 
@@ -55,7 +55,7 @@ class DeviceTypeHandlers
     public static function getBrowser($agent = null): string
     {
         if (!$agent) {
-            $agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+            $agent = $_SERVER['HTTP_USER_AGENT'] ?? '' ?? '';
         }
         $agent = strtolower($agent);
 
@@ -82,7 +82,7 @@ class DeviceTypeHandlers
         if($agent){
             $agent = strtolower($agent);
         }else{
-            $agent= strtolower($_SERVER['HTTP_USER_AGENT'] ?? '');
+            $agent= strtolower($_SERVER['HTTP_USER_AGENT'] ?? '' ?? '');
         }
         if (!empty($agent)) {
             $spiderSite= array(
