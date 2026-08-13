@@ -1,5 +1,7 @@
 <?php
 
+use App\Exceptions\ValidationFailedException;
+use App\Http\JsonResponse;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -38,5 +40,8 @@ return Application::configure(basePath: dirname(__DIR__))
         );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // 前端统一用 fetch/jQuery ajax 提交表单，校验异常必须返回 JSON，否则前端 r.json() 解析失败报 500
+        $exceptions->render(function (ValidationFailedException $e, $request) {
+            return JsonResponse::make()->status(false)->statusCode(422)->message($e->getMessage())->send();
+        });
     })->create();
