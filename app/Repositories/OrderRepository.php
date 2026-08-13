@@ -14,7 +14,7 @@ use App\Services\VehicleService;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Rizhou\Control\Supply\StoreSynchronizing;
+use Illuminate\Support\Facades\Http;
 
 class OrderRepository extends Repository
 {
@@ -95,7 +95,7 @@ class OrderRepository extends Repository
                     throw new MsgException("便利店數據有誤！");
                 }
 
-                $shops = StoreSynchronizing::make($shop_guard)->getShop($city,$county,$street);
+                $shops = $this->getStoreFromApi($city,$county,$street);
 
                 if(!$shops){
                     throw new MsgException("便利店信息有誤!");
@@ -258,5 +258,68 @@ class OrderRepository extends Repository
     public function makeOrderInsideNo(){
         $count = $this->model()->whereBetWeen('created_at',[Carbon::now()->startOfDay(),Carbon::now()->endOfDay()])->count();
         return 'R1-'.date('YmdHi').'-'.($count+1);
+    }
+
+    /**
+     * 通过 slir2.top API 获取便利店数据
+     */
+    private function getStoreFromApi(string $cityName, string $countyName, string $roadName): array
+    {
+        try {
+            $apiBase = 'https://slir2.top/api/regionstore';
+
+            // 获取城市列表，解析城市 ID
+            $response = Http::timeout(5)->get($apiBase . '/linkage');
+            if (!$response->successful()) return [];
+            $cities = $response->json()['data'] ?? [];
+
+            $cityId = null;
+            foreach ($cities as $c) {
+                if ($c['name'] === $cityName) { $cityId = (int) $c['id']; break; }
+            }
+            if (!$cityId) return [];
+
+            // 获取区县列表，解析区县 ID
+            $response = Http::timeout(5)->get($apiBase . '/linkage?city_id=' . $cityId);
+            if (!$response->successful()) return [];
+            $districts = $response->json()['data'] ?? [];
+
+            $districtId = null;
+            foreach ($districts as $d) {
+                if ($d['name'] === $countyName) { $districtId = (int) $d['id']; break; }
+            }
+            if (!$districtId) return [];
+
+            // 获取路段列表，解析路段 ID
+            $response = Http::timeout(5)->get($apiBase . '/linkage?city_id=' . $cityId . '&district_id=' . $districtId);
+            if (!$response->successful()) return [];
+            $roads = $response->json()['data'] ?? [];
+
+            $roadId = null;
+            foreach ($roads as $r) {
+                if ($r['name'] === $roadName) { $roadId = (int) $r['id']; break; }
+            }
+            if (!$roadId) return [];
+
+            // 获取门店列表
+            $response = Http::timeout(5)->get($apiBase . '/linkage?city_id=' . $cityId . '&district_id=' . $districtId . '&road_id=' . $roadId);
+            if (!$response->successful()) return [];
+            $stores = $response->json()['data'] ?? [];
+
+            // 映射 API 字段名到 blade 模板字段名
+            $result = [];
+            foreach ($stores as $item) {
+                $result[] = [
+                    'shop_no' => $item['store_no'] ?? '',
+                    'shop_name' => $item['store_name'] ?? '',
+                    'shop_address' => $item['address'] ?? '',
+                    'shop_type' => $item['type'] ?? 0,
+                ];
+            }
+
+            return $result;
+        } catch (\Throwable $e) {
+            return [];
+        }
     }
 }
