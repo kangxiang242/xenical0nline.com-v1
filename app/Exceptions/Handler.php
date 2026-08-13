@@ -74,7 +74,7 @@ class Handler extends ExceptionHandler
         }*/
 
         if($exception instanceof ValidationFailedException){
-            if(request()->ajax()){
+            if(request()->ajax() || request()->expectsJson()){
                 return JsonResponse::make()->status(false)->statusCode(422)->message($exception->getMessage())->send();
             }
         }

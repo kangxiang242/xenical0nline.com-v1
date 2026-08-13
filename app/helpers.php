@@ -2,6 +2,10 @@
 
 function asset_upload($path='',$default=null){
 
+    if ($path !== '' && (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0 || strpos($path, '//') === 0)) {
+        return $path;
+    }
+
     return asset('uploads/'.$path);
 
 }

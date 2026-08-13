@@ -400,7 +400,7 @@
                 <div class="form-item">
                     <svg class="formicon" viewBox="0 0 1024 1024"><use href="#icon-formicon-phone"></use></svg>
                     <div class="form-input">
-                        <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel" pattern="09\d{2}\s\d{3}\s\d{3}" maxlength="12" placeholder="09** *** ***" required>
+                        <input type="tel" id="phone" name="phone" inputmode="numeric" autocomplete="tel" pattern="^09\d{8}$" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" title="請輸入09開頭的10位數字" placeholder="0912345678" required>
                         <label>
                             <span style="transition-delay:0ms">請</span>
                             <span style="transition-delay:50ms">輸</span>
