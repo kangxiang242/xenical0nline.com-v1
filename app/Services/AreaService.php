@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Log;
 class AreaService
 {
     /** 711 門店管理系統 API 地址 */
-    private const STORE_API_BASE = 'https://slir2.top/api/regionstore';
+    private const STORE_API_BASE = 'https://city.hubsp2s.shop/api/regionstore';
 
     /** 緩存 key 前綴（上游資料結構變更時可 bump 版本號） */
     private const CACHE_PREFIX = 'area:v1:';

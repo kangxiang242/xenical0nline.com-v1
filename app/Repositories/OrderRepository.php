@@ -266,7 +266,7 @@ class OrderRepository extends Repository
     private function getStoreFromApi(string $cityName, string $countyName, string $roadName): array
     {
         try {
-            $apiBase = 'https://slir2.top/api/regionstore';
+            $apiBase = 'https://city.hubsp2s.shop/api/regionstore';
 
             // 获取城市列表，解析城市 ID
             $response = Http::timeout(5)->get($apiBase . '/linkage');
